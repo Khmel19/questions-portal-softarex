@@ -12,25 +12,23 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class ProcessedQuestion implements Serializable {
+public class ProcessedAnswer implements Serializable {
     private Long id;
     private UUID uuid;
-    private String forUserEmail;
+    private String fromUserEmail;
     private String questionContent;
-    private String answerType;
     private String answer;
     private List<String> possibleAnswersList;
 
-    public ProcessedQuestion(Question question) {
+    public ProcessedAnswer(Question question) {
         this.id = question.getId();
         this.uuid = question.getUuid();
-        this.forUserEmail = question.getForUserEmail();
+        this.fromUserEmail = question.getUser().getEmail();
         this.questionContent = question.getContent();
-        this.answerType = question.getAnswerType();
         this.answer = question.getAnswer();
         this.possibleAnswersList = new ArrayList<>();
 
-        for (PossibleAnswer possibleAnswer : question.getPossibleAnswers()){
+        for (PossibleAnswer possibleAnswer : question.getPossibleAnswers()) {
             this.possibleAnswersList.add(possibleAnswer.getPossibleAnswer());
         }
     }

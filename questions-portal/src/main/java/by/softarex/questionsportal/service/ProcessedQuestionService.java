@@ -37,6 +37,7 @@ public class ProcessedQuestionService {
 
     public Question getQuestionFromProcessedQuestion(ProcessedQuestion processedQuestion, Long userId, Long questionId) {
         Question question = fillQuestionFields(processedQuestion, userId);
+        question.setAnswer("");
         question.setId(questionId);
         return question;
     }

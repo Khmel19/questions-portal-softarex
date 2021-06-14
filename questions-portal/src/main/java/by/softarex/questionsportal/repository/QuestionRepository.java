@@ -12,4 +12,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     List<Question> getAllByUser(User user);
 
+    List<Question> getAllByForUserEmail(String forUserEmail);
+
 }

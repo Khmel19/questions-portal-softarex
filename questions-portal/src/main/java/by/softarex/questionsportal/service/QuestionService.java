@@ -2,12 +2,12 @@ package by.softarex.questionsportal.service;
 
 import by.softarex.questionsportal.entity.PossibleAnswer;
 import by.softarex.questionsportal.entity.Question;
-import by.softarex.questionsportal.repository.PossibleAnswerRepository;
 import by.softarex.questionsportal.repository.QuestionRepository;
+import by.softarex.questionsportal.util.ProcessedAnswer;
 import by.softarex.questionsportal.util.ProcessedQuestion;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,17 +16,20 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserService userService;
     private final ProcessedQuestionService processedQuestionService;
-    private final PossibleAnswerRepository possibleAnswerRepository;
+    private final PossibleAnswerService possibleAnswerService;
+    private final ProcessedAnswerService processedAnswerService;
 
     @Autowired
     public QuestionService(QuestionRepository questionRepository,
                            ProcessedQuestionService processedQuestionService,
                            UserService userService,
-                           PossibleAnswerRepository possibleAnswerRepository) {
+                           PossibleAnswerService possibleAnswerService,
+                           ProcessedAnswerService processedAnswerService) {
         this.questionRepository = questionRepository;
         this.processedQuestionService = processedQuestionService;
         this.userService = userService;
-        this.possibleAnswerRepository = possibleAnswerRepository;
+        this.possibleAnswerService = possibleAnswerService;
+        this.processedAnswerService = processedAnswerService;
     }
 
 
@@ -41,18 +44,36 @@ public class QuestionService {
 
         updatingQuestion.setUuid(existingQuestion.getUuid());
         for (PossibleAnswer possibleAnswer : updatingQuestion.getPossibleAnswers()) {
-           possibleAnswerRepository.save(possibleAnswer);
+            possibleAnswerService.savePossibleAnswer(possibleAnswer);
         }
         questionRepository.save(updatingQuestion);
     }
 
 
-    public List<ProcessedQuestion> getAllUserQuestions(Long id) {
-        return processedQuestionService.getProcessedQuestions(questionRepository.getAllByUser(userService.getUser(id)));
+    public List<ProcessedQuestion> getAllUserQuestions(Long userId) {
+        return processedQuestionService.getProcessedQuestions(questionRepository
+                .getAllByUser(userService
+                        .getUser(userId)));
     }
 
 
-    public void deleteQuestion(Long questionId){
+    public void updateQuestionAnswer(Long questionId, String answer){
+        Question existingQuestion = questionRepository.findById(questionId).get();
+        JSONObject answerJson = new JSONObject(answer);
+        String answerStr = answerJson.getString("answer");
+        existingQuestion.setAnswer(answerStr);
+        questionRepository.save(existingQuestion);
+    }
+
+
+    public List<ProcessedAnswer> getAllUserAnswers(Long userId) {
+        return processedAnswerService.getProcessedAnswers(questionRepository
+                .getAllByForUserEmail(userService
+                        .getUser(userId)
+                        .getEmail()));
+    }
+
+    public void deleteQuestion(Long questionId) {
         questionRepository.delete(questionRepository.getById(questionId));
     }
 }
