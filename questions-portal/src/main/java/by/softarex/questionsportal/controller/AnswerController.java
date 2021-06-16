@@ -2,7 +2,6 @@ package by.softarex.questionsportal.controller;
 
 import by.softarex.questionsportal.service.QuestionService;
 import by.softarex.questionsportal.util.ProcessedAnswer;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -17,4 +17,14 @@ public class UserService {
     public User getUser(Long userId) {
         return userRepository.getById(userId);
     }
+
+    public User validatePassword(String email, String password){
+        User user = userRepository.getByEmail(email);
+        //TODO Хешировать пароль перед сравниванием
+        if (user.getPassword().equals(password)){
+            return user;
+        }else {
+            return null;
+        }
+    }
 }

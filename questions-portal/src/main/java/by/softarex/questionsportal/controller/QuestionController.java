@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -27,7 +29,7 @@ public class QuestionController {
 
 
     @PostMapping("/{userId}/questions/add")
-    public ResponseEntity<ProcessedQuestion> addQuestion(@RequestBody ProcessedQuestion processedQuestion, @PathVariable Long userId) {
+    public ResponseEntity<ProcessedQuestion> addQuestion(HttpServletRequest request, HttpServletResponse response, @RequestBody ProcessedQuestion processedQuestion, @PathVariable Long userId) {
         questionService.saveQuestion(processedQuestion, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
