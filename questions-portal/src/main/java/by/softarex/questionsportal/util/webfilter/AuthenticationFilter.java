@@ -1,5 +1,7 @@
 package by.softarex.questionsportal.util.webfilter;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@Component
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
 
@@ -17,13 +20,18 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = request.getSession(false);
 
         String loginURI = request.getContextPath() + "/login";
-        boolean loggedIn = session != null && session.getAttribute("authenticated")!=null;
-        boolean loginRequest = request.getRequestURI().equals(loginURI);
+        String logoutURI = request.getContextPath() + "/logout";
+        String registrationURI = request.getContextPath() + "/registration";
 
-        if (loggedIn || loginRequest) {
+        boolean loggedIn = session != null && session.getAttribute("authenticated") != null;
+        boolean loginRequest = request.getRequestURI().equals(loginURI);
+        boolean logoutRequest = request.getRequestURI().equals(logoutURI);
+        boolean registrationRequest = request.getRequestURI().equals(registrationURI);
+
+        if (registrationRequest || logoutRequest || loggedIn || loginRequest) {
             filterChain.doFilter(request, response);
-        }else {
-            response.sendError(400, "Bad Request");
+        } else {
+            response.sendError(401, "Unauthorized");
         }
 
     }

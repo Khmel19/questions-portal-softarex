@@ -39,6 +39,7 @@ public class Question {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn(name = "question_id")
     private List<PossibleAnswer> possibleAnswers = new ArrayList<>();
