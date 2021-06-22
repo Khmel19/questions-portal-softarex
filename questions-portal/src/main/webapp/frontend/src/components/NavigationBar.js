@@ -22,7 +22,7 @@ export default class NavigationBar extends Component {
                     <Link to={"/answers"} style={{marginRight: 50}} className="nav-link">Answer the question</Link>
                     <NavDropdown title={this.state.username} id="navbarScrollingDropdown">
                         <NavDropdown.Item>
-                            <Link to={"/sosiPisunchik"} className="nav-link">Action</Link>
+                            <Link to={"/alalalong"} className="nav-link">Action</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action5">Something else here</NavDropdown.Item>
