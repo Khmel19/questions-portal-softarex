@@ -3,7 +3,7 @@ import {Button, ButtonGroup, Card, FormControl, InputGroup, Table} from "react-b
 import axios from "axios";
 import {faEdit, faPlus, faTrash, faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"; // TODO: delete this if you don't need i
 
 export default class AnswersList extends Component {
 
@@ -68,7 +68,7 @@ export default class AnswersList extends Component {
         const {answers, currentPage, totalPages} = this.state;
 
 
-        const pageNumCss = {
+        const pageNumCss = { // TODO: move css to separate file please, and dont use style attr in tags components (This is related to all js files).
             width: "45px",
             color: "#ffffff",
             textAlign: "center",

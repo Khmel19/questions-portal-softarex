@@ -1,5 +1,6 @@
 package by.softarex.questionsportal.config.emailconfig;
 
+// TODO: weird package name 'emailconfig' the same class name
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

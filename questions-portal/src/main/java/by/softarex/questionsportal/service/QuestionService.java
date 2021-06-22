@@ -42,11 +42,11 @@ public class QuestionService {
 
 
     public void updateQuestion(ProcessedQuestion processedQuestion, Long userId, Long questionId) {
-        Question existingQuestion = questionRepository.findById(questionId).get();
+        Question existingQuestion = questionRepository.findById(questionId).get(); // TODO: Use Optional correctly.
         Question updatingQuestion = processedQuestionService.getQuestionFromProcessedQuestion(processedQuestion, userId, questionId);
 
         updatingQuestion.setUuid(existingQuestion.getUuid());
-        for (PossibleAnswer possibleAnswer : updatingQuestion.getPossibleAnswers()) {
+        for (PossibleAnswer possibleAnswer : updatingQuestion.getPossibleAnswers()) {  // TODO: Use java 8 steams here
             possibleAnswerService.savePossibleAnswer(possibleAnswer);
         }
         questionRepository.save(updatingQuestion);
@@ -72,8 +72,8 @@ public class QuestionService {
 
 
     public void updateQuestionAnswer(Long questionId, String answer) {
-        Question existingQuestion = questionRepository.findById(questionId).get();
-        JSONObject answerJson = new JSONObject(answer);
+        Question existingQuestion = questionRepository.findById(questionId).get(); // TODO: Use Optional correctly.
+        JSONObject answerJson = new JSONObject(answer); // TODO: is Answer are JSON object? If yes, you should use some DTO object instead of String.
         String answerStr = answerJson.getString("answer");
         existingQuestion.setAnswer(answerStr);
         questionRepository.save(existingQuestion);
@@ -81,12 +81,12 @@ public class QuestionService {
 
 
     public ProcessedQuestion getQuestion(Long questionId) {
-        return processedQuestionService.getProcessedQuestion(questionRepository.findById(questionId).get());
+        return processedQuestionService.getProcessedQuestion(questionRepository.findById(questionId).get()); // TODO: Use Optional correctly.
     }
 
 
     public Page<ProcessedAnswer> getAllUserAnswers(Long userId, Pageable pageable) {
-        Page<Question> answersPage = questionRepository
+        Page<Question> answersPage = questionRepository // TODO: Code formatting looks strange (in some cases you use 8 spaces instead of 4, but it up to you.
                 .getAllByForUserEmail(userService
                         .getUser(userId)
                         .getEmail(), pageable);
@@ -107,6 +107,6 @@ public class QuestionService {
 
 
     public void deleteQuestion(Long questionId) {
-        questionRepository.delete(questionRepository.findById(questionId).get());
+        questionRepository.delete(questionRepository.findById(questionId).get()); // TODO: Use Optional correctly.
     }
 }

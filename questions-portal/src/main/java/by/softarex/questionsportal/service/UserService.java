@@ -25,7 +25,7 @@ public class UserService {
     }
 
     public User validateUserPassword(String passwordAndUsername) {
-        JSONObject passwordAndUsernameJson = new JSONObject(passwordAndUsername);
+        JSONObject passwordAndUsernameJson = new JSONObject(passwordAndUsername); // TODO: Use DTO instead of JSON string
         String email = passwordAndUsernameJson.getString("email");
         String password = passwordAndUsernameJson.getString("password");
         User user = userRepository.getByEmail(email.toLowerCase());
@@ -33,7 +33,7 @@ public class UserService {
             if (passwordEncoder.matches(password, user.getPassword())) {
                 return user;
             } else {
-                return null;
+                return null; // TODO: (OPTIONAL) better to throw an exception during validation.
             }
         } else {
             return null;

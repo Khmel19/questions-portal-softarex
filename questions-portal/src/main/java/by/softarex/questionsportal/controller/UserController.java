@@ -51,7 +51,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/{userId}/delete")
+    @DeleteMapping("/{userId}/delete") // TODO: http method indicates the operation 'delete' is redundant
     public ResponseEntity<User> deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+// TODO: Separate this class to two, QuestionService and QuestionConverterService (or just QuestionConverter)
 public class ProcessedQuestionService {
 
     private final UserService userService;
@@ -23,7 +24,7 @@ public class ProcessedQuestionService {
     public List<ProcessedQuestion> getProcessedQuestions(List<Question> questionsList) {
         List<ProcessedQuestion> processedQuestionList = new ArrayList<>();
 
-        for (Question question : questionsList) {
+        for (Question question : questionsList) { // TODO: use Java 8 streams here
             processedQuestionList.add(new ProcessedQuestion(question));
         }
         return processedQuestionList;
@@ -40,6 +41,7 @@ public class ProcessedQuestionService {
     }
 
 
+    // TODO: This could be moved to QuestionConverterService
     public Question getQuestionFromProcessedQuestion(ProcessedQuestion processedQuestion, Long userId, Long questionId) {
         Question question = fillQuestionFields(processedQuestion, userId);
         question.setAnswer("");
@@ -57,7 +59,7 @@ public class ProcessedQuestionService {
         question.setAnswerType(processedQuestion.getAnswerType());
         question.setUser(userService.getUser(userId));
 
-        for (String possibleAnswer : processedQuestion.getPossibleAnswersList()) {
+        for (String possibleAnswer : processedQuestion.getPossibleAnswersList()) {  // TODO: Use java 8 streams here
             question.getPossibleAnswers().add(new PossibleAnswer(possibleAnswer));
         }
         return question;

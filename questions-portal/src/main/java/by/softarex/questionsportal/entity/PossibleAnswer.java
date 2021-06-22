@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+// TODO: please rewrite equals and hashCode methods.
+// This is a error prone way when we autogenerate it
 @Entity
 @Data
 @NoArgsConstructor

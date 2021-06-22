@@ -25,12 +25,13 @@ public class AnswerController {
 
     @GetMapping("/{userId}/answers")
     public ResponseEntity<Page<ProcessedAnswer>> getAllUserAnswers(@PathVariable Long userId, Pageable pageable) {
+        // don't use userId to retrieve all emails, better to use uuid filed
         return ResponseEntity.ok(questionService.getAllUserAnswers(userId, pageable));
     }
 
 
-    @PutMapping("/{userId}/answers/{answerId}/edit")
-    public ResponseEntity<ProcessedAnswer> updateQuestionAnswer(
+    @PutMapping("/{userId}/answers/{answerId}/edit") // TODO: juts /{userId}/answers/{answerId} without edit
+    public ResponseEntity<ProcessedAnswer> updateQuestionAnswer( // TODO: you don't return here anything, you don't need ResponseEntity<ProcessedAnswer>
             @RequestBody String answer,
             @PathVariable Long userId,
             @PathVariable Long answerId) {

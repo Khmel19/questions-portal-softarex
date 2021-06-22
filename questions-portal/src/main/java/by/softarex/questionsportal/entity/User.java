@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.UUID;
 
+// TODO: please rewrite equals and hashCode methods.
 @Entity
 @Data
 @NoArgsConstructor

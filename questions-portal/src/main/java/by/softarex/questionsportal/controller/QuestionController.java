@@ -37,6 +37,7 @@ public class QuestionController {
     }
 
     @PostMapping("/{userId}/questions/add")
+    // TODO: remove not needed argumetns
     public ResponseEntity<ProcessedQuestion> addQuestion(HttpServletRequest request, HttpServletResponse response, @RequestBody ProcessedQuestion processedQuestion, @PathVariable Long userId) {
         questionService.saveQuestion(processedQuestion, userId);
         return new ResponseEntity<>(HttpStatus.OK);

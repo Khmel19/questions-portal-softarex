@@ -12,6 +12,10 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+// TODO: Processed? Maybe better name this like AnswerDTO (read about DTOs if you didn't hear), also I'm not sure that this class should be related to utils
+
+
+// TODO: this class could be Immutable
 public class ProcessedAnswer implements Serializable {
     private Long id;
     private UUID uuid;
@@ -28,7 +32,7 @@ public class ProcessedAnswer implements Serializable {
         this.answer = question.getAnswer();
         this.possibleAnswersList = new ArrayList<>();
 
-        for (PossibleAnswer possibleAnswer : question.getPossibleAnswers()) {
+        for (PossibleAnswer possibleAnswer : question.getPossibleAnswers()) { // TODO: use Java 8 here too.
             this.possibleAnswersList.add(possibleAnswer.getPossibleAnswer());
         }
     }

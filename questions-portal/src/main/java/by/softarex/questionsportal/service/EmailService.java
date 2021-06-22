@@ -25,7 +25,7 @@ public class EmailService {
 
         String text = generateMessage(whichMessage);
         String subject = generateSubject(whichMessage);
-        message.setFrom("dealer-statistics@yandex.by");
+        message.setFrom("dealer-statistics@yandex.by"); //  TODO: Use application property file for that type of data in future
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);

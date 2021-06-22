@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+// TODO: please rewrite equals and hashCode methods.
+// you can reade these topics:
+// https://vladmihalcea.com/the-best-way-to-implement-equals-hashcode-and-tostring-with-jpa-and-hibernate/
+// https://thorben-janssen.com/ultimate-guide-to-implementing-equals-and-hashcode-with-hibernate/
 @Entity
 @Data
 @NoArgsConstructor
