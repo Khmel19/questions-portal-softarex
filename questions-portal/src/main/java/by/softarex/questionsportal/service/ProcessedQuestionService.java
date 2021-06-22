@@ -30,6 +30,11 @@ public class ProcessedQuestionService {
     }
 
 
+    public ProcessedQuestion getProcessedQuestion(Question question){
+        return new ProcessedQuestion(question);
+    }
+
+
     public Question getQuestionFromProcessedQuestion(ProcessedQuestion processedQuestion, Long userId) {
         return fillQuestionFields(processedQuestion, userId);
     }

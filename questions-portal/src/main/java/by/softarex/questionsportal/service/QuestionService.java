@@ -7,6 +7,9 @@ import by.softarex.questionsportal.util.ProcessedAnswer;
 import by.softarex.questionsportal.util.ProcessedQuestion;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,14 +53,25 @@ public class QuestionService {
     }
 
 
-    public List<ProcessedQuestion> getAllUserQuestions(Long userId) {
-        return processedQuestionService.getProcessedQuestions(questionRepository
-                .getAllByUser(userService
-                        .getUser(userId)));
+    public Page<ProcessedQuestion> getAllUserQuestions(Long userId, Pageable pageable) {
+
+        Page<Question> questionsPage = questionRepository.getAllByUser(userService
+                .getUser(userId), pageable);
+
+        List<ProcessedQuestion> processedQuestionPageList = processedQuestionService
+                .getProcessedQuestions(questionsPage.getContent());
+
+        List<ProcessedQuestion> processedQuestionList = processedQuestionService
+                .getProcessedQuestions(questionRepository
+                        .getAllByUser(userService.getUser(userId)));
+
+        return new PageImpl<>(
+                processedQuestionPageList,
+                pageable, processedQuestionList.size());
     }
 
 
-    public void updateQuestionAnswer(Long questionId, String answer){
+    public void updateQuestionAnswer(Long questionId, String answer) {
         Question existingQuestion = questionRepository.findById(questionId).get();
         JSONObject answerJson = new JSONObject(answer);
         String answerStr = answerJson.getString("answer");
@@ -66,14 +80,33 @@ public class QuestionService {
     }
 
 
-    public List<ProcessedAnswer> getAllUserAnswers(Long userId) {
-        return processedAnswerService.getProcessedAnswers(questionRepository
-                .getAllByForUserEmail(userService
-                        .getUser(userId)
-                        .getEmail()));
+    public ProcessedQuestion getQuestion(Long questionId) {
+        return processedQuestionService.getProcessedQuestion(questionRepository.findById(questionId).get());
     }
 
+
+    public Page<ProcessedAnswer> getAllUserAnswers(Long userId, Pageable pageable) {
+        Page<Question> answersPage = questionRepository
+                .getAllByForUserEmail(userService
+                        .getUser(userId)
+                        .getEmail(), pageable);
+
+        List<ProcessedAnswer> processedAnswerPageList = processedAnswerService
+                .getProcessedAnswers(answersPage.getContent());
+
+        List<ProcessedAnswer> processedAnswerList = processedAnswerService
+                .getProcessedAnswers(questionRepository
+                        .getAllByForUserEmail(userService
+                                .getUser(userId)
+                                .getEmail()));
+
+        return new PageImpl<>(
+                processedAnswerPageList,
+                pageable, processedAnswerList.size());
+    }
+
+
     public void deleteQuestion(Long questionId) {
-        questionRepository.delete(questionRepository.getById(questionId));
+        questionRepository.delete(questionRepository.findById(questionId).get());
     }
 }

@@ -3,6 +3,8 @@ package by.softarex.questionsportal.controller;
 import by.softarex.questionsportal.service.QuestionService;
 import by.softarex.questionsportal.util.ProcessedAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/")
 public class AnswerController {
 
     private final QuestionService questionService;
@@ -21,8 +24,8 @@ public class AnswerController {
 
 
     @GetMapping("/{userId}/answers")
-    public ResponseEntity<List<ProcessedAnswer>> getAllUserAnswers(@PathVariable Long userId) {
-        return ResponseEntity.ok(questionService.getAllUserAnswers(userId));
+    public ResponseEntity<Page<ProcessedAnswer>> getAllUserAnswers(@PathVariable Long userId, Pageable pageable) {
+        return ResponseEntity.ok(questionService.getAllUserAnswers(userId, pageable));
     }
 
 

@@ -34,4 +34,5 @@ public class ProcessedQuestion implements Serializable {
             this.possibleAnswersList.add(possibleAnswer.getPossibleAnswer());
         }
     }
+
 }
