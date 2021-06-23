@@ -29,6 +29,12 @@ public class AnswerController {
     }
 
 
+    @GetMapping("/answers/{answerId}")
+    public ResponseEntity<ProcessedAnswer> getAnswer(@PathVariable Long answerId) {
+        return ResponseEntity.ok(questionService.getAnswer(answerId));
+    }
+
+
     @PutMapping("/{userId}/answers/{answerId}/edit")
     public ResponseEntity<ProcessedAnswer> updateQuestionAnswer(
             @RequestBody String answer,

@@ -126,7 +126,7 @@ export default class QuestionList extends Component {
                                         {/*    <FontAwesomeIcon icon={faEdit}/>*/}
                                         {/*</Link>*/}
                                         <Button size="sm"
-                                                href={`edit/${question.uuid}`}
+                                                href={`/questions/edit/${question.uuid}`}
                                                 onClick={this.fillStorage.bind(this, question.id)}
                                                 variant="outline-secondary"><FontAwesomeIcon
                                             icon={faEdit}/></Button>

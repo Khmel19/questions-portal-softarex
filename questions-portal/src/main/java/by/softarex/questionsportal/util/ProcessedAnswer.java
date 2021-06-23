@@ -18,12 +18,14 @@ public class ProcessedAnswer implements Serializable {
     private String fromUserEmail;
     private String questionContent;
     private String answer;
+    private String answerType;
     private List<String> possibleAnswersList;
 
     public ProcessedAnswer(Question question) {
         this.id = question.getId();
-        this.uuid = question.getUuid();
+        this.uuid = UUID.randomUUID();
         this.fromUserEmail = question.getUser().getEmail();
+        this.answerType = question.getAnswerType();
         this.questionContent = question.getContent();
         this.answer = question.getAnswer();
         this.possibleAnswersList = new ArrayList<>();

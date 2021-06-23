@@ -6,6 +6,7 @@ import Welcome from "./components/Welcome";
 import Question from "./components/Question";
 import QuestionList from "./components/QuestionList";
 import AnswersList from "./components/AnswerList";
+import Answer from "./components/Answer";
 
 function App() {
 
@@ -22,8 +23,9 @@ function App() {
                     <Switch>
                         <Route path="/" exact component = {Welcome}/>
                         <Route path="/questions/add" exact component = {Question}/>
-                        <Route path="/edit/:uuid" exact component ={Question}/>
+                        <Route path="/questions/edit/:uuid" exact component ={Question}/>
                         <Route path="/questions" exact component = {QuestionList}/>
+                        <Route path="/answers/edit/" exact component = {Answer}/>
                         <Route path="/answers" exact component = {AnswersList}/>
                     </Switch>
                 </Col>

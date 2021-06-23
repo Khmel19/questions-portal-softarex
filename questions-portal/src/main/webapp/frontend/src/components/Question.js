@@ -83,7 +83,7 @@ updateQuestion = event => {
     }
 
     questionList = () => {
-        return this.props.history.push("/questionList")
+        return this.props.history.push("/questions")
     }
 
     render() {

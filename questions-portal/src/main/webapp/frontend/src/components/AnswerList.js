@@ -1,10 +1,35 @@
-import React, {Component} from "react";
-import {Button, ButtonGroup, Card, FormControl, InputGroup, Table} from "react-bootstrap";
+import React, {Component, useState} from "react";
+import {Button, ButtonGroup, Card, Modal,FormControl, InputGroup, Table} from "react-bootstrap";
 import axios from "axios";
 import {faEdit, faPlus, faTrash, faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
+import Answer from "./Answer";
+import {render} from "@testing-library/react";
+function Example() {
+    const [show, setShow] = useState(true);
 
+    const handleClose = () => setShow(false);
+
+    return (
+        <>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Answer the question</Modal.Title>
+                </Modal.Header>
+                <Modal.Body><Answer/></Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+}
 export default class AnswersList extends Component {
 
     constructor(props) {
@@ -12,14 +37,21 @@ export default class AnswersList extends Component {
         this.state = {
             answers: [],
             currentPage: 1,
-            answersPerPage: 5
+            answersPerPage: 5,
+            show: false
         };
     }
 
     componentDidMount() {
         this.getAnswers(this.state.currentPage);
+
     }
 
+    setShow = (something) => {
+        this.setState({
+            show : something
+        })
+    }
 
     getAnswers(currentPage) {
         currentPage -= 1
@@ -37,6 +69,10 @@ export default class AnswersList extends Component {
 
     fillStorage = (answerId) => {
         localStorage.setItem("answerId", answerId)
+
+            this.setShow(true)
+
+
     }
 
 
@@ -76,11 +112,39 @@ export default class AnswersList extends Component {
         }
 
 
+
         return (
+
+
             <Card className={"border border-light bg-white text-dark"}>
                 <Card.Header>Answer the question
                 </Card.Header>
                 <Card.Body>
+                    {/*<Button variant="primary" onClick={handleShow}>*/}
+                    {/*    Launch demo modal*/}
+                    {/*</Button>*/}
+
+                    {/*<Modal show={show()} onHide={handleClose}>*/}
+                    {/*    <Modal.Header closeButton>*/}
+                    {/*        <Modal.Title>Modal heading</Modal.Title>*/}
+                    {/*    </Modal.Header>*/}
+                    {/*    <Modal.Body>*/}
+                    {/*        <Answer/>*/}
+                    {/*    </Modal.Body>*/}
+                    {/*    <Modal.Footer>*/}
+                    {/*        <Button variant="secondary" onClick={handleClose}>*/}
+                    {/*            Close*/}
+                    {/*        </Button>*/}
+                    {/*        <Button variant="primary" onClick={handleClose}>*/}
+                    {/*            Save Changes*/}
+                    {/*        </Button>*/}
+                    {/*    </Modal.Footer>*/}
+                    {/*</Modal>*/}
+                    {this.state.show?
+                        <Example/>
+
+                        : null}
+
                     <Table striped bordered hover>
                         <thead>
                         <tr>
@@ -101,13 +165,8 @@ export default class AnswersList extends Component {
                                     <td>{answer.questionContent}</td>
                                     <td>{answer.answer}</td>
                                     <td><ButtonGroup>
-                                        {/*<Link to={`edit/${question.uuid}`}*/}
-                                        {/*      className={"btn btn-sm btn-outline-secondary"}>*/}
-                                        {/*    */}
-                                        {/*    <FontAwesomeIcon icon={faEdit}/>*/}
-                                        {/*</Link>*/}
                                         <Button size="sm"
-                                                href={`edit/${answer.uuid}`}
+                                                //href={`/answers/edit/`}
                                                 onClick={this.fillStorage.bind(this, answer.id)}
                                                 variant="outline-secondary"><FontAwesomeIcon
                                             icon={faEdit}/></Button>

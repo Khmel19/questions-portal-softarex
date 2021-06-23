@@ -85,6 +85,10 @@ public class QuestionService {
     }
 
 
+    public ProcessedAnswer getAnswer(Long answerId){
+        return processedAnswerService.getProcessedAnswer(questionRepository.findById(answerId).get());
+    }
+
     public Page<ProcessedAnswer> getAllUserAnswers(Long userId, Pageable pageable) {
         Page<Question> answersPage = questionRepository
                 .getAllByForUserEmail(userService

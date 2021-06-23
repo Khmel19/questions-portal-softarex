@@ -19,4 +19,8 @@ public class ProcessedAnswerService {
         return processedQuestionList;
     }
 
+
+    public ProcessedAnswer getProcessedAnswer(Question question){
+        return new ProcessedAnswer(question);
+    }
 }
