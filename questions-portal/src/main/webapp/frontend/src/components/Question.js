@@ -25,7 +25,7 @@ export default class Question extends Component {
     componentDidMount() {
         const questionUUId = this.props.match.params.uuid;
         const questionId = localStorage.getItem("questionId")
-        if (questionUUId) {
+        if (questionId) {
             this.findQuestionById(questionId);
         }
     }
@@ -92,9 +92,9 @@ updateQuestion = event => {
 
         return (
             <Card className={"border border-light bg-white text-dark"}>
-                <Card.Header> {this.props.match.params.uuid ? "Update question" : "Add question"}</Card.Header>
+                <Card.Header> {localStorage.getItem("questionId") ? "Update question" : "Add question"}</Card.Header>
                 <Card.Body>
-                    <Form onSubmit={this.props.match.params.uuid ? this.updateQuestion : this.submitQuestion} id="questionFormId">
+                    <Form onSubmit={localStorage.getItem("questionId") ? this.updateQuestion : this.submitQuestion} id="questionFormId">
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                             <Form.Label column sm={2}>
                                 For user
@@ -167,7 +167,7 @@ updateQuestion = event => {
                             CANCEL
                         </Button>
                         <Button style={{marginLeft: 10}} variant="primary" type="submit">
-                            {this.props.match.params.uuid ? "UPDATE" : "SAVE"}
+                            {localStorage.getItem("questionId") ? "UPDATE" : "SAVE"}
                         </Button>
                     </Form>
                 </Card.Body>

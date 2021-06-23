@@ -12,7 +12,8 @@ export default class QuestionList extends Component {
         this.state = {
             questions: [],
             currentPage: 1,
-            questionsPerPage: 5
+            questionsPerPage: 5,
+            show: false
         };
     }
 
@@ -35,9 +36,25 @@ export default class QuestionList extends Component {
             });
     }
 
+
     fillStorage = (questionId) => {
         localStorage.setItem("questionId", questionId)
+        this.setShow(true)
     }
+
+
+    setShow = (something) => {
+        this.setState({
+            show: something
+        })
+    }
+
+
+    clearStorage = () => {
+        localStorage.removeItem("questionId")
+        this.setShow(true)
+    }
+
 
     deleteQuestion = (questionId) => {
         axios.delete(`http://localhost:8080/3/questions/${questionId}/delete`)

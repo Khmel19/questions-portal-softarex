@@ -67,9 +67,9 @@ export default class Answer extends Component {
             [event.target.name]: event.target.value
         });
     }
-    answersList = () => {
-        return this.props.history.push("/answers")
-    }
+    // answersList = () => {
+    //     return this.props.history.push("/answers")
+    // }
 
     render() {
         const {fromUserEmail, questionContent, answerType, answer, possibleAnswersList} = this.state;
@@ -79,7 +79,7 @@ export default class Answer extends Component {
                 <Card.Body>
                     <Form onSubmit={this.updateAnswer} id="answerFormId">
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                            <Form.Label column sm={2}>
+                            <Form.Label column sm={3}>
                                 From user
                             </Form.Label>
                             <Col sm={10}>
@@ -96,7 +96,7 @@ export default class Answer extends Component {
 
 
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalQuestion">
-                            <Form.Label column sm={2}>
+                            <Form.Label column sm={3}>
                                 Question
                             </Form.Label>
                             <Col sm={10}>
@@ -137,14 +137,14 @@ export default class Answer extends Component {
                         {/*            as="textarea" rows={3}/>*/}
                         {/*    </Col>*/}
                         {/*</Form.Group>*/}
-                        <Button className={"border border-dark bg-white text-dark"}
-                                style={{marginLeft: 890}}
-                                onClick={this.answersList.bind()}
-                                type="button">
-                            CANCEL
-                        </Button>
-                        <Button style={{marginLeft: 10}} variant="primary" type="submit">
-                            { "UPDATE SAVE"}
+                        {/*<Button className={"border border-dark bg-white text-dark"}*/}
+                        {/*        style={{marginLeft: 890}}*/}
+                        {/*        onClick={this.answersList.bind()}*/}
+                        {/*        type="button">*/}
+                        {/*    CANCEL*/}
+                        {/*</Button>*/}
+                        <Button  variant="primary" type="submit">
+                            { "SUBMIT"}
                         </Button>
                     </Form>
                 </Card.Body>

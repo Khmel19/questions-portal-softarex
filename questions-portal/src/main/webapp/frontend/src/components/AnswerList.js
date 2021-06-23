@@ -1,11 +1,12 @@
 import React, {Component, useState} from "react";
-import {Button, ButtonGroup, Card, Modal,FormControl, InputGroup, Table} from "react-bootstrap";
+import {Button, ButtonGroup, Card, Modal, FormControl, InputGroup, Table} from "react-bootstrap";
 import axios from "axios";
 import {faEdit, faPlus, faTrash, faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import Answer from "./Answer";
 import {render} from "@testing-library/react";
+
 function Example() {
     const [show, setShow] = useState(true);
 
@@ -30,6 +31,7 @@ function Example() {
         </>
     );
 }
+
 export default class AnswersList extends Component {
 
     constructor(props) {
@@ -49,7 +51,7 @@ export default class AnswersList extends Component {
 
     setShow = (something) => {
         this.setState({
-            show : something
+            show: something
         })
     }
 
@@ -60,9 +62,9 @@ export default class AnswersList extends Component {
             .then((data) => {
                 this.setState({
                     answers: data.content,
-                    totalPages : data.totalPages,
-                    totalElements : data.totalElements,
-                    currentPage : data.number + 1
+                    totalPages: data.totalPages,
+                    totalElements: data.totalElements,
+                    currentPage: data.number + 1
                 });
             });
     }
@@ -70,7 +72,7 @@ export default class AnswersList extends Component {
     fillStorage = (answerId) => {
         localStorage.setItem("answerId", answerId)
 
-            this.setShow(true)
+        this.setShow(true)
 
 
     }
@@ -112,7 +114,6 @@ export default class AnswersList extends Component {
         }
 
 
-
         return (
 
 
@@ -140,10 +141,25 @@ export default class AnswersList extends Component {
                     {/*        </Button>*/}
                     {/*    </Modal.Footer>*/}
                     {/*</Modal>*/}
-                    {this.state.show?
-                        <Example/>
+                     <Modal show={this.state.show} onHide={() => this.setShow(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Answer the question</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Answer/>
+                        </Modal.Body>
+                        {/*<Modal.Footer>*/}
+                        {/*    <Button variant="secondary" onClick={() => this.setShow(false)}>*/}
+                        {/*        Close*/}
+                        {/*    </Button>*/}
+                        {/*    <Button variant="primary" onClick={() => this.setShow(false)}>*/}
+                        {/*        Save Changes*/}
+                        {/*    </Button>*/}
+                        {/*</Modal.Footer>*/}
+                    </Modal>
 
-                        : null}
+
+
 
                     <Table striped bordered hover>
                         <thead>
@@ -166,11 +182,11 @@ export default class AnswersList extends Component {
                                     <td>{answer.answer}</td>
                                     <td><ButtonGroup>
                                         <Button size="sm"
-                                                //href={`/answers/edit/`}
+                                            //href={`/answers/edit/`}
                                                 onClick={this.fillStorage.bind(this, answer.id)}
                                                 variant="outline-secondary"><FontAwesomeIcon
                                             icon={faEdit}/></Button>
-                                        </ButtonGroup></td>
+                                    </ButtonGroup></td>
                                 </tr>
                             ))
                         }
