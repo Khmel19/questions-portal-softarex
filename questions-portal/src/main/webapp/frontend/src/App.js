@@ -22,10 +22,9 @@ function App() {
                 <Col lg={12} style={marginTop}>
                     <Switch>
                         <Route path="/" exact component = {Welcome}/>
-                        <Route path="/questions/add" exact component = {Question}/>
-                        <Route path="/questions/edit/:uuid" exact component ={Question}/>
+
                         <Route path="/questions" exact component = {QuestionList}/>
-                        <Route path="/answers/edit/" exact component = {Answer}/>
+
                         <Route path="/answers" exact component = {AnswersList}/>
                     </Switch>
                 </Col>

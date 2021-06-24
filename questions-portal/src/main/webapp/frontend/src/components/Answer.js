@@ -158,6 +158,8 @@ export default class Answer extends Component {
                                     className={"table-sub-heading-color text-dark"}
                                 />
                             </Col>
+                            <Form.Label column sm={3}>
+                            </Form.Label>
                         </Form.Group>
                         }
 
@@ -174,6 +176,8 @@ export default class Answer extends Component {
                                     onChange={this.answerChange}
                                     as="textarea" rows={3}/>
                             </Col>
+                            <Form.Label column sm={3}>
+                            </Form.Label>
                         </Form.Group>
                         }
                         {this.state.answerType === "radio button" &&
@@ -252,6 +256,8 @@ export default class Answer extends Component {
                                     />
                                 </MuiPickersUtilsProvider>
                             </Col>
+                            <Form.Label column sm={3}>
+                            </Form.Label>
                         </Form.Group>
                         }
 

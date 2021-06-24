@@ -68,8 +68,6 @@ export default class QuestionList extends Component {
 
                 }
             });
-
-        this.props.history.push('/questionList')
     };
 
     changePage = event => {
