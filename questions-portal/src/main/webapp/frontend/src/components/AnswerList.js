@@ -7,30 +7,6 @@ import {Link} from "react-router-dom";
 import Answer from "./Answer";
 import {render} from "@testing-library/react";
 
-function Example() {
-    const [show, setShow] = useState(true);
-
-    const handleClose = () => setShow(false);
-
-    return (
-        <>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Answer the question</Modal.Title>
-                </Modal.Header>
-                <Modal.Body><Answer/></Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    );
-}
 
 export default class AnswersList extends Component {
 
@@ -143,7 +119,7 @@ export default class AnswersList extends Component {
                     {/*</Modal>*/}
                      <Modal show={this.state.show} onHide={() => this.setShow(false)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Answer the question</Modal.Title>
+                            <Modal.Title className={"text-sm-left"}>Answer the question</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Answer/>

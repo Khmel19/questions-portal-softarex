@@ -1,9 +1,11 @@
 import React, {Component} from "react";
-import {Button, ButtonGroup, Card, FormControl, InputGroup, Table} from "react-bootstrap";
+import {Button, ButtonGroup, Card, FormControl, InputGroup, Modal, Table} from "react-bootstrap";
 import axios from "axios";
 import {faEdit, faPlus, faTrash, faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
+import Answer from "./Answer";
+import Question from "./Question";
 
 export default class QuestionList extends Component {
 
@@ -110,11 +112,28 @@ export default class QuestionList extends Component {
             <Card className={"border border-light bg-white text-dark"}>
                 <Card.Header>Your questions
                     <Button size="sm" style={{marginLeft: 846}}
-                            href={"/questions/add"}
+                           onClick={this.clearStorage}
                             variant="primary"><FontAwesomeIcon
                         icon={faPlus}/> Add question</Button>
                 </Card.Header>
                 <Card.Body>
+                    <Modal show={this.state.show}
+                           onHide={() => this.setShow(false)}>
+                        <Modal.Header closeButton>
+                           <Modal.Title className={"text-sm-left"}> {localStorage.getItem("questionId") ? "Update question" : "Add question"}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                           <Question/>
+                        </Modal.Body>
+                        {/*<Modal.Footer>*/}
+                        {/*    <Button variant="secondary" onClick={() => this.setShow(false)}>*/}
+                        {/*        Close*/}
+                        {/*    </Button>*/}
+                        {/*    <Button variant="primary" onClick={() => this.setShow(false)}>*/}
+                        {/*        Save Changes*/}
+                        {/*    </Button>*/}
+                        {/*</Modal.Footer>*/}
+                    </Modal>
                     <Table striped bordered hover>
                         <thead>
                         <tr>
@@ -143,7 +162,6 @@ export default class QuestionList extends Component {
                                         {/*    <FontAwesomeIcon icon={faEdit}/>*/}
                                         {/*</Link>*/}
                                         <Button size="sm"
-                                                href={`/questions/edit/${question.uuid}`}
                                                 onClick={this.fillStorage.bind(this, question.id)}
                                                 variant="outline-secondary"><FontAwesomeIcon
                                             icon={faEdit}/></Button>

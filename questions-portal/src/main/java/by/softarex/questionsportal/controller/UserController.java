@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -35,6 +36,12 @@ public class UserController {
     public ResponseEntity<User> logout(HttpServletRequest request) {
         request.getSession().setAttribute("authenticated", null);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @GetMapping("/emails")
+    public ResponseEntity<List<String>> getEmails(){
+        return ResponseEntity.ok(userService.getAllUsersEmails());
     }
 
 

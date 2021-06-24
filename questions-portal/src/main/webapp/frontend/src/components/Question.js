@@ -23,7 +23,7 @@ export default class Question extends Component {
     }
 
     componentDidMount() {
-        const questionUUId = this.props.match.params.uuid;
+       // const questionUUId = this.props.match.params.uuid;
         const questionId = localStorage.getItem("questionId")
         if (questionId) {
             this.findQuestionById(questionId);
@@ -59,6 +59,7 @@ export default class Question extends Component {
 
 
         event.preventDefault();
+        window.location.reload();
     }
 
 updateQuestion = event => {
@@ -72,9 +73,10 @@ updateQuestion = event => {
         .then(response => {
              if (response.data != null) {
                 this.setState(this.initialState);
-                this.questionList();
+                //this.questionList();
              }
         });
+    window.location.reload();
 }
     questionChange(event) {
         this.setState({
@@ -92,14 +94,14 @@ updateQuestion = event => {
 
         return (
             <Card className={"border border-light bg-white text-dark"}>
-                <Card.Header> {localStorage.getItem("questionId") ? "Update question" : "Add question"}</Card.Header>
+                {/*<Card.Header> {localStorage.getItem("questionId") ? "Update question" : "Add question"}</Card.Header>*/}
                 <Card.Body>
                     <Form onSubmit={localStorage.getItem("questionId") ? this.updateQuestion : this.submitQuestion} id="questionFormId">
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                            <Form.Label column sm={2}>
+                            <Form.Label column sm={4}>
                                 For user
                             </Form.Label>
-                            <Col sm={10}>
+                            <Col sm={8}>
                                 <Form.Control
                                     required autoComplete="off"
                                     type="email"
@@ -112,10 +114,10 @@ updateQuestion = event => {
 
 
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalQuestion">
-                            <Form.Label column sm={2}>
+                            <Form.Label column sm={4}>
                                 Question
                             </Form.Label>
-                            <Col sm={10}>
+                            <Col sm={8}>
                                 <Form.Control
                                     required autoComplete="off"
                                     type="text"
@@ -128,10 +130,10 @@ updateQuestion = event => {
 
 
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalAnswerType">
-                            <Form.Label column sm={2}>
+                            <Form.Label column sm={4}>
                                 Answer type
                             </Form.Label>
-                            <Col sm={10}>
+                            <Col sm={8}>
                                 <Form.Control as={'select'} name="answerType"
                                               value={answerType}
                                               onChange={this.questionChange}
@@ -151,8 +153,8 @@ updateQuestion = event => {
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Form.Label column sm={2}>Options</Form.Label>
-                            <Col sm={10}>
+                            <Form.Label column sm={4}>Options</Form.Label>
+                            <Col sm={8}>
                                 <Form.Control
                                     value={possibleAnswersList}
                                     name="possibleAnswersList"
@@ -160,13 +162,13 @@ updateQuestion = event => {
                                     as="textarea" rows={3}/>
                             </Col>
                         </Form.Group>
-                        <Button className={"border border-dark bg-white text-dark"}
-                                style={{marginLeft: 890}}
-                                onClick={ this.questionList.bind()}
-                                type="button">
-                            CANCEL
-                        </Button>
-                        <Button style={{marginLeft: 10}} variant="primary" type="submit">
+                        {/*<Button className={"border border-dark bg-white text-dark"}*/}
+                        {/*        style={{marginLeft: 890}}*/}
+                        {/*        onClick={ this.questionList.bind()}*/}
+                        {/*        type="button">*/}
+                        {/*    CANCEL*/}
+                        {/*</Button>*/}
+                        <Button variant="primary" type="submit">
                             {localStorage.getItem("questionId") ? "UPDATE" : "SAVE"}
                         </Button>
                     </Form>
