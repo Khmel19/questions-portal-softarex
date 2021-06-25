@@ -26,7 +26,9 @@ export default class QuestionList extends Component {
 
     getQuestions(currentPage) {
         currentPage -= 1
-        axios.get(`http://localhost:8080/3/questions?page=${currentPage}&size=${this.state.questionsPerPage}`)
+        const userId = localStorage.getItem("userId")
+
+        axios.get(`http://localhost:8080/${userId}/questions?page=${currentPage}&size=${this.state.questionsPerPage}`)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
@@ -35,7 +37,10 @@ export default class QuestionList extends Component {
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
                 });
-            });
+            }).catch((error) => {
+                alert(error.toString())
+               // localStorage.removeItem("authenticated")
+        });
     }
 
 
@@ -59,7 +64,8 @@ export default class QuestionList extends Component {
 
 
     deleteQuestion = (questionId) => {
-        axios.delete(`http://localhost:8080/3/questions/${questionId}/delete`)
+        const userId = localStorage.getItem("userId")
+        axios.delete(`http://localhost:8080/${userId}/questions/${questionId}/delete`)
             .then(response => {
                 if (response.data != null) {
                     this.setState({

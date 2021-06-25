@@ -1,9 +1,7 @@
 import React, {Component} from "react";
-import {Card, Form, Button, Col, Row, Modal} from "react-bootstrap";
+import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import eol from "eol";
 import axios from "axios";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave} from "@fortawesome/free-solid-svg-icons";
 
 export default class Question extends Component {
     constructor(props) {
@@ -23,7 +21,6 @@ export default class Question extends Component {
     }
 
     componentDidMount() {
-       // const questionUUId = this.props.match.params.uuid;
         const questionId = localStorage.getItem("questionId")
         if (questionId) {
             this.findQuestionById(questionId);
@@ -62,30 +59,28 @@ export default class Question extends Component {
         window.location.reload();
     }
 
-updateQuestion = event => {
+    updateQuestion = event => {
         event.preventDefault();
-    const question = {
-        ...this.state,
-        possibleAnswersList: eol.split(this.state.possibleAnswersList)
+        const question = {
+            ...this.state,
+            possibleAnswersList: eol.split(this.state.possibleAnswersList)
+        }
+        const userId = localStorage.getItem("userId")
+        const questionId = localStorage.getItem("questionId")
+        axios.put(`http://localhost:8080/${userId}/questions/${questionId}/edit`, question)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState(this.initialState);
+                    //this.questionList();
+                }
+            });
+        window.location.reload();
     }
-    const questionId = localStorage.getItem("questionId")
-    axios.put(`http://localhost:8080/3/questions/${questionId}/edit`, question)
-        .then(response => {
-             if (response.data != null) {
-                this.setState(this.initialState);
-                //this.questionList();
-             }
-        });
-    window.location.reload();
-}
+
     questionChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
-    }
-
-    questionList = () => {
-        return this.props.history.push("/questions")
     }
 
     render() {
@@ -94,9 +89,9 @@ updateQuestion = event => {
 
         return (
             <Card className={"border border-light bg-white text-dark"}>
-                {/*<Card.Header> {localStorage.getItem("questionId") ? "Update question" : "Add question"}</Card.Header>*/}
                 <Card.Body>
-                    <Form onSubmit={localStorage.getItem("questionId") ? this.updateQuestion : this.submitQuestion} id="questionFormId">
+                    <Form onSubmit={localStorage.getItem("questionId") ? this.updateQuestion : this.submitQuestion}
+                          id="questionFormId">
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                             <Form.Label column sm={4}>
                                 For user
@@ -162,12 +157,6 @@ updateQuestion = event => {
                                     as="textarea" rows={3}/>
                             </Col>
                         </Form.Group>
-                        {/*<Button className={"border border-dark bg-white text-dark"}*/}
-                        {/*        style={{marginLeft: 890}}*/}
-                        {/*        onClick={ this.questionList.bind()}*/}
-                        {/*        type="button">*/}
-                        {/*    CANCEL*/}
-                        {/*</Button>*/}
                         <Button variant="primary" type="submit">
                             {localStorage.getItem("questionId") ? "UPDATE" : "SAVE"}
                         </Button>

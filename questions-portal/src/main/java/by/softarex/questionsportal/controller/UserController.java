@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 public class UserController {
     private final UserService userService;
@@ -25,6 +27,7 @@ public class UserController {
         User user = userService.validateUserPassword(passwordAndUsername);
         if (user != null) {
             request.getSession().setAttribute("authenticated", true);
+            System.out.println(request.getSession().getId());
             return ResponseEntity.ok(user);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -34,7 +37,12 @@ public class UserController {
 
     @GetMapping("/logout")
     public ResponseEntity<User> logout(HttpServletRequest request) {
-        request.getSession().setAttribute("authenticated", null);
+        try {
+            request.logout();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
+//        request.getSession().setAttribute("authenticated", null);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -57,6 +65,11 @@ public class UserController {
         }
     }
 
+
+//    @RequestMapping(method = RequestMethod.OPTIONS, path = "/*")
+//    public ResponseEntity<Object> options(){
+//        return new  ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @DeleteMapping("/{userId}/delete")
     public ResponseEntity<User> deleteUser(@PathVariable Long userId){

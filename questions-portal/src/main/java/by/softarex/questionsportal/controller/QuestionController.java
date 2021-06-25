@@ -26,7 +26,8 @@ public class QuestionController {
 
 
     @GetMapping("/{userId}/questions")
-    public ResponseEntity<Page<ProcessedQuestion>> getAllUserQuestions(@PathVariable Long userId, Pageable pageable) {
+    public ResponseEntity<Page<ProcessedQuestion>> getAllUserQuestions(@PathVariable Long userId, Pageable pageable, HttpServletResponse response) {
+
         return ResponseEntity.ok(questionService.getAllUserQuestions(userId, pageable));
     }
 

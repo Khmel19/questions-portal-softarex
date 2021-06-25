@@ -40,7 +40,7 @@ export default class Answer extends Component {
                     answerType: response.data.answerType,
                     answer: response.data.answer,
                     possibleAnswersList: response.data.possibleAnswersList,
-                    date : response.data.answer
+                    date: response.data.answer
                 })
             }).catch((error) => {
             console.error("Error - " + error);
@@ -54,8 +54,9 @@ export default class Answer extends Component {
         const answer = {
             ...this.state,
         }
+        const userId = localStorage.getItem("userId")
         const answerId = localStorage.getItem("answerId")
-        axios.put(`http://localhost:8080/3/answers/${answerId}/edit`, answer)
+        axios.put(`http://localhost:8080/${userId}/answers/${answerId}/edit`, answer)
             .then(response => {
                 if (response.data != null) {
                     this.setState(this.initialState);
@@ -69,7 +70,7 @@ export default class Answer extends Component {
     handleDateChange = (date) => {
         this.setState({
             date,
-            answer : date.toString().substring(4,16)
+            answer: date.toString().substring(4, 16)
         })
     };
 
@@ -260,40 +261,6 @@ export default class Answer extends Component {
                             </Form.Label>
                         </Form.Group>
                         }
-
-
-                        {/*<Form.Group as={Row} className="mb-3" controlId="formHorizontalAnswerType">*/}
-                        {/*    <Form.Label column sm={2}>*/}
-                        {/*        Answer type*/}
-                        {/*    </Form.Label>*/}
-                        {/*    <Col sm={10}>*/}
-                        {/*        <Form.Control  name="answerType"*/}
-                        {/*                      value={answerType}*/}
-                        {/*                      onChange={this.answerChange}*/}
-                        {/*                      disabled*/}
-                        {/*                      className={"bg-white text-dark"}>*/}
-
-                        {/*        </Form.Control>*/}
-
-                        {/*    </Col>*/}
-                        {/*</Form.Group>*/}
-
-                        {/*<Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">*/}
-                        {/*    <Form.Label column sm={2}>Options</Form.Label>*/}
-                        {/*    <Col sm={10}>*/}
-                        {/*        <Form.Control*/}
-                        {/*            value={possibleAnswersList}*/}
-                        {/*            name="possibleAnswersList"*/}
-                        {/*            onChange={this.answerChange}*/}
-                        {/*            as="textarea" rows={3}/>*/}
-                        {/*    </Col>*/}
-                        {/*</Form.Group>*/}
-                        {/*<Button className={"border border-dark bg-white text-dark"}*/}
-                        {/*        style={{marginLeft: 890}}*/}
-                        {/*        onClick={this.answersList.bind()}*/}
-                        {/*        type="button">*/}
-                        {/*    CANCEL*/}
-                        {/*</Button>*/}
                         <Button variant="primary" type="submit">
                             {"SUBMIT"}
                         </Button>

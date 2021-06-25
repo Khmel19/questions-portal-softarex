@@ -7,6 +7,17 @@ import Question from "./components/Question";
 import QuestionList from "./components/QuestionList";
 import AnswersList from "./components/AnswerList";
 import Answer from "./components/Answer";
+import Login from "./components/Login";
+import axios from "axios";
+import axiosCookieJarSupport from "axios-cookiejar-support";
+import tough from 'tough-cookie';
+
+const cookieJar = new tough.CookieJar()
+axiosCookieJarSupport(axios)
+axios.defaults.jar = cookieJar
+axios.defaults.withCredentials = true
+
+// window.axios = axios
 
 function App() {
 
@@ -24,7 +35,7 @@ function App() {
                         <Route path="/" exact component = {Welcome}/>
 
                         <Route path="/questions" exact component = {QuestionList}/>
-
+                        <Route path="/login" exact component = {Login}/>
                         <Route path="/answers" exact component = {AnswersList}/>
                     </Switch>
                 </Col>

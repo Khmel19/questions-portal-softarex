@@ -1,11 +1,9 @@
-import React, {Component, useState} from "react";
-import {Button, ButtonGroup, Card, Modal, FormControl, InputGroup, Table} from "react-bootstrap";
+import React, {Component} from "react";
+import {Button, ButtonGroup, Card, FormControl, InputGroup, Modal, Table} from "react-bootstrap";
 import axios from "axios";
-import {faEdit, faPlus, faTrash, faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Link} from "react-router-dom";
 import Answer from "./Answer";
-import {render} from "@testing-library/react";
 
 
 export default class AnswersList extends Component {
@@ -33,7 +31,8 @@ export default class AnswersList extends Component {
 
     getAnswers(currentPage) {
         currentPage -= 1
-        axios.get(`http://localhost:8080/3/answers?page=${currentPage}&size=${this.state.answersPerPage}`)
+        const userId = localStorage.getItem("userId")
+        axios.get(`http://localhost:8080/${userId}/answers?page=${currentPage}&size=${this.state.answersPerPage}`)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
@@ -97,44 +96,14 @@ export default class AnswersList extends Component {
                 <Card.Header>Answer the question
                 </Card.Header>
                 <Card.Body>
-                    {/*<Button variant="primary" onClick={handleShow}>*/}
-                    {/*    Launch demo modal*/}
-                    {/*</Button>*/}
-
-                    {/*<Modal show={show()} onHide={handleClose}>*/}
-                    {/*    <Modal.Header closeButton>*/}
-                    {/*        <Modal.Title>Modal heading</Modal.Title>*/}
-                    {/*    </Modal.Header>*/}
-                    {/*    <Modal.Body>*/}
-                    {/*        <Answer/>*/}
-                    {/*    </Modal.Body>*/}
-                    {/*    <Modal.Footer>*/}
-                    {/*        <Button variant="secondary" onClick={handleClose}>*/}
-                    {/*            Close*/}
-                    {/*        </Button>*/}
-                    {/*        <Button variant="primary" onClick={handleClose}>*/}
-                    {/*            Save Changes*/}
-                    {/*        </Button>*/}
-                    {/*    </Modal.Footer>*/}
-                    {/*</Modal>*/}
-                     <Modal show={this.state.show} onHide={() => this.setShow(false)}>
+                    <Modal show={this.state.show} onHide={() => this.setShow(false)}>
                         <Modal.Header closeButton>
                             <Modal.Title className={"text-sm-left"}>Answer the question</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Answer/>
                         </Modal.Body>
-                        {/*<Modal.Footer>*/}
-                        {/*    <Button variant="secondary" onClick={() => this.setShow(false)}>*/}
-                        {/*        Close*/}
-                        {/*    </Button>*/}
-                        {/*    <Button variant="primary" onClick={() => this.setShow(false)}>*/}
-                        {/*        Save Changes*/}
-                        {/*    </Button>*/}
-                        {/*</Modal.Footer>*/}
                     </Modal>
-
-
 
 
                     <Table striped bordered hover>
@@ -158,10 +127,9 @@ export default class AnswersList extends Component {
                                     <td>{answer.answer}</td>
                                     <td><ButtonGroup>
                                         <Button size="sm"
-                                            //href={`/answers/edit/`}
                                                 onClick={this.fillStorage.bind(this, answer.id)}
                                                 variant="outline-secondary"><FontAwesomeIcon
-                                            icon={faEdit}/></Button>
+                                                icon={faEdit}/></Button>
                                     </ButtonGroup></td>
                                 </tr>
                             ))
