@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import Answer from "./Answer";
 import Question from "./Question";
+// const axios = window.axios
 
 export default class QuestionList extends Component {
 
