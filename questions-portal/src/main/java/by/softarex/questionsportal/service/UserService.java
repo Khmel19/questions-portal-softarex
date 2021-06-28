@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User getUser(Long userId) {
-        return userRepository.getById(userId);
+        return userRepository.findById(userId).get();
     }
 
     public User validateUserPassword(String passwordAndUsername) {
@@ -73,10 +73,16 @@ public class UserService {
     }
 
 
-    public void deleteUser(Long userId) {
+    public boolean deleteUser(Long userId, String password) {
         User deletedUser = userRepository.getById(userId);
-        emailService.sendSimpleMessage(deletedUser.getEmail(), "deletion");
-        userRepository.delete(deletedUser);
+        JSONObject passwordJson = new JSONObject(password);
+        if (passwordEncoder.matches(passwordJson.getString("password"), deletedUser.getPassword())) {
+            emailService.sendSimpleMessage(deletedUser.getEmail(), "deletion");
+            userRepository.delete(deletedUser);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

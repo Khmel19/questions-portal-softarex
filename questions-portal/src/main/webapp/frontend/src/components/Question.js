@@ -47,7 +47,8 @@ export default class Question extends Component {
             ...this.state,
             possibleAnswersList: eol.split(this.state.possibleAnswersList)
         }
-        axios.post("http://localhost:8080/3/questions/add", question)
+        const userId = localStorage.getItem("userId")
+        axios.post(`http://localhost:8080/${userId}/questions/add`, question)
             .then(response => {
                 if (response.data != null) {
                     this.setState(this.initialState);

@@ -27,7 +27,6 @@ public class UserController {
         User user = userService.validateUserPassword(passwordAndUsername);
         if (user != null) {
             request.getSession().setAttribute("authenticated", true);
-            System.out.println(request.getSession().getId());
             return ResponseEntity.ok(user);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -42,13 +41,18 @@ public class UserController {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-//        request.getSession().setAttribute("authenticated", null);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> getUser(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.getUser(userId));
+    }
+
+
     @GetMapping("/emails")
-    public ResponseEntity<List<String>> getEmails(){
+    public ResponseEntity<List<String>> getEmails() {
         return ResponseEntity.ok(userService.getAllUsersEmails());
     }
 
@@ -56,34 +60,36 @@ public class UserController {
     @PostMapping("/registration")
     public ResponseEntity<User> registration(@RequestBody User newUser, HttpServletRequest request) {
         User user = userService.registerUser(newUser);
-        if (user != null){
+        if (user != null) {
             request.getSession().setAttribute("authenticated", true);
             return ResponseEntity.ok(user);
-        }
-        else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
 
-//    @RequestMapping(method = RequestMethod.OPTIONS, path = "/*")
-//    public ResponseEntity<Object> options(){
-//        return new  ResponseEntity<>(HttpStatus.OK);
-//    }
-
-    @DeleteMapping("/{userId}/delete")
-    public ResponseEntity<User> deleteUser(@PathVariable Long userId){
-        userService.deleteUser(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/{userId}/delete")
+    public ResponseEntity<User> deleteUser(@PathVariable Long userId, @RequestBody String password, HttpServletRequest request) {
+        if (userService.deleteUser(userId, password)) {
+            try {
+                request.logout();
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
     @PutMapping("/{userId}/edit")
-    public ResponseEntity<User> updateUser(@RequestBody String updatedUser, @PathVariable Long userId){
+    public ResponseEntity<User> updateUser(@RequestBody String updatedUser, @PathVariable Long userId) {
         User user = userService.updateUser(updatedUser, userId);
-        if (user!=null){
+        if (user != null) {
             return ResponseEntity.ok(user);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

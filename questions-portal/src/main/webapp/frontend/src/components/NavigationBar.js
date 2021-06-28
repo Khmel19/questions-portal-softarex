@@ -4,21 +4,17 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSignInAlt, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {withRouter} from 'react-router-dom'
 
-export default class NavigationBar extends Component {
+class NavigationBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: localStorage.getItem("firstName"  ),
             authenticated: localStorage.getItem("authenticated")
         }
-        //this.redirectCheck()
+        this.redirectCheck()
     }
-// componentDidMount() {
-//         this.setState({
-//             authenticated: localStorage.getItem("authenticated")
-//         })
-// }
 
     logout = () => {
         axios.get(`http://localhost:8080/logout`)
@@ -28,7 +24,7 @@ export default class NavigationBar extends Component {
                 localStorage.removeItem("userId")
                 localStorage.removeItem("authenticated");
 
-                this.props.history.push("/");
+               // this.props.history.push("/");
                 window.location.reload();
             }).catch((error) => {
             alert(error)
@@ -46,8 +42,8 @@ export default class NavigationBar extends Component {
         const guestLinks = (
             <>
                 <div className="mr-auto"/>
-                <Nav className="navbar-right">
-                    <Link to={"/register"} className="nav-link"><FontAwesomeIcon icon={faUserPlus}/> Register</Link>
+                <Nav className="navbar-right" style={{marginRight: 50}}>
+                    <Link to={"/registration"} style={{marginRight: 10}} className="nav-link"><FontAwesomeIcon icon={faUserPlus}/> Registration</Link>
                     <Link to={"/login"} className="nav-link"><FontAwesomeIcon icon={faSignInAlt}/> Login</Link>
                 </Nav>
             </>
@@ -55,7 +51,7 @@ export default class NavigationBar extends Component {
 
         const userLinks = (
             <>
-                <Nav style={{marginRight: 300}} className="ml-auto">
+                <Nav style={{marginRight: 100}} className="ml-auto">
                     <Link to={"/questions"} style={{marginRight: 50}} className="nav-link">Your questions</Link>
                     <Link to={"/answers"} style={{marginRight: 50}} className="nav-link">Answer the question</Link>
                     <NavDropdown title={this.state.username} id="navbarScrollingDropdown">
@@ -69,7 +65,7 @@ export default class NavigationBar extends Component {
 
         return (
             <Navbar bg="light" variant="light">
-                <Link style={{marginLeft: 300}} to={"/"} className="navbar-brand">
+                <Link style={{marginLeft: 250}} to={"/"} className="navbar-brand">
                     <img src="https://eclubprague.com/wp-content/uploads/2016/03/qa.png" width="35"
                          alt="brand"/> Question Portal
                 </Link>
@@ -80,3 +76,4 @@ export default class NavigationBar extends Component {
         );
     }
 }
+export default withRouter(NavigationBar);

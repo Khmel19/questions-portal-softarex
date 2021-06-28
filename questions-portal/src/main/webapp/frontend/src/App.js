@@ -11,6 +11,9 @@ import Login from "./components/Login";
 import axios from "axios";
 import axiosCookieJarSupport from "axios-cookiejar-support";
 import tough from 'tough-cookie';
+import Registration from "./components/Registration";
+import DeleteUser from "./components/DeleteUser";
+import EditProfile from "./components/EditProfile";
 
 const cookieJar = new tough.CookieJar()
 axiosCookieJarSupport(axios)
@@ -33,10 +36,12 @@ function App() {
                 <Col lg={12} style={marginTop}>
                     <Switch>
                         <Route path="/" exact component = {Welcome}/>
-
+                        <Route path='/registration' exact component = {Registration}/>
                         <Route path="/questions" exact component = {QuestionList}/>
                         <Route path="/login" exact component = {Login}/>
                         <Route path="/answers" exact component = {AnswersList}/>
+                        <Route path="/delete" exact component = {DeleteUser}/>
+                        <Route path="/edit" exact component = {EditProfile}/>
                     </Switch>
                 </Col>
             </Row>

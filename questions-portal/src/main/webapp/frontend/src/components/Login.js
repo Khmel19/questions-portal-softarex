@@ -34,38 +34,22 @@ class Login extends Component {
                 localStorage.setItem("lastName", response.data.lastName)
                 localStorage.setItem("userId", response.data.id)
                 localStorage.setItem("authenticated", true);
-                 window.location.reload();
-                //return this.props.history.push("/");
+                window.location.reload();
             }).catch((error) => {
-            alert(error)
+            alert("Wrong password or email")
         });
-
-        // this.props.authenticateUser(this.state.email, this.state.password);
-        // setTimeout(() => {
-        //     if(this.props.auth.isLoggedIn) {
-        //         return this.props.history.push("/");
-        //     } else {
-        //         this.resetLoginForm();
-        //         this.setState({"error":"Invalid email and password"});
-        //     }
-        // }, 500);
     };
 
     resetLoginForm = () => {
-        localStorage.removeItem("firstName")
-        localStorage.removeItem("lastName")
-        localStorage.removeItem("userId")
-        localStorage.removeItem("authenticated");
         this.setState(() => this.initialState);
     };
 
     render() {
-        const {email, password, error} = this.state;
+        const {email, password} = this.state;
 
         return (
             <Row className="justify-content-md-center">
                 <Col xs={5}>
-                    {error && <Alert variant="danger">{error}</Alert>}
                     <Card className={"border border-dark bg-white text-dark"}>
                         <Card.Header>
                             <FontAwesomeIcon icon={faSignInAlt}/> Login
@@ -77,7 +61,7 @@ class Login extends Component {
                                         <InputGroup.Prepend>
                                             <InputGroup.Text><FontAwesomeIcon icon={faEnvelope}/></InputGroup.Text>
                                         </InputGroup.Prepend>
-                                        <FormControl required autoComplete="off" type="text" name="email" value={email}
+                                        <FormControl required autoComplete="off" type="email" name="email" value={email}
                                                      onChange={this.credentialChange}
                                                      className={"bg-white text-dark"}
                                                      placeholder="Enter Email Address"/>
@@ -98,10 +82,12 @@ class Login extends Component {
                             </Form.Row>
                         </Card.Body>
                         <Card.Footer style={{textAlign: "right"}}>
-                            <Button size="sm" type="button" variant="primary" onClick={() => {console.log(1);this.validateUser()}}
+                            <Button size="sm" type="button" variant="primary" onClick={() => {
+                                this.validateUser()
+                            }}
                                     disabled={email === '' || password === ''}>
                                 <FontAwesomeIcon icon={faSignInAlt}/> Login
-                            </Button>
+                            </Button>{' '}
                             <Button size="sm" type="button" variant="danger" onClick={this.resetLoginForm}
                                     disabled={email === '' && password === ''}>
                                 <FontAwesomeIcon icon={faUndo}/> Reset
