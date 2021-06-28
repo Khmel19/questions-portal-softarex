@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -44,4 +45,34 @@ public class Question {
     @JoinColumn(name = "question_id")
     private List<PossibleAnswer> possibleAnswers = new ArrayList<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        if (!Objects.equals(id, question.id)) return false;
+        if (!Objects.equals(uuid, question.uuid)) return false;
+        if (!Objects.equals(content, question.content)) return false;
+        if (!Objects.equals(answerType, question.answerType)) return false;
+        if (!Objects.equals(answer, question.answer)) return false;
+        if (!Objects.equals(forUserEmail, question.forUserEmail))
+            return false;
+        if (!Objects.equals(user, question.user)) return false;
+        return Objects.equals(possibleAnswers, question.possibleAnswers);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (answerType != null ? answerType.hashCode() : 0);
+        result = 31 * result + (answer != null ? answer.hashCode() : 0);
+        result = 31 * result + (forUserEmail != null ? forUserEmail.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (possibleAnswers != null ? possibleAnswers.hashCode() : 0);
+        return result;
+    }
 }
