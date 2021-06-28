@@ -41,7 +41,7 @@ public class EmailService {
         } else if (whichMessage.equals("deletion")){
             return "You have deleted your account on the Question Portal. Waiting for you again!";
         }
-        return "lol";
+        return "";
     }
 
     private String generateSubject(String whichMessage){
@@ -50,7 +50,7 @@ public class EmailService {
         }else if (whichMessage.equals("deletion")){
             return "You have deleted your account";
         }
-        return "lol";
+        return "";
     }
 
 }
