@@ -25,30 +25,30 @@ axios.defaults.withCredentials = true
 function App() {
 
     const marginTop = {
-        marginTop:"20px"
+        marginTop: "20px"
     };
 
-  return (
-    <Router>
-          <NavigationBar/>
-        <Container>
-            <Row>
-                <Col lg={12} style={marginTop}>
-                    <Switch>
-                        <Route path="/" exact component = {Welcome}/>
-                        <Route path='/registration' exact component = {Registration}/>
-                        <Route path="/questions" exact component = {QuestionList}/>
-                        <Route path="/login" exact component = {Login}/>
-                        <Route path="/answers" exact component = {AnswersList}/>
-                        <Route path="/delete" exact component = {DeleteUser}/>
-                        <Route path="/edit" exact component = {EditProfile}/>
-                    </Switch>
-                </Col>
-            </Row>
-        </Container>
+    return (
+        <Router>
+            <NavigationBar/>
+            <Container>
+                <Row>
+                    <Col lg={12} style={marginTop}>
+                        <Switch>
+                            <Route path="/" exact component={Welcome}/>
+                            <Route path='/registration' exact component={Registration}/>
+                            <Route path="/questions" exact component={QuestionList}/>
+                            <Route path="/login" exact component={Login}/>
+                            <Route path="/answers" exact component={AnswersList}/>
+                            <Route path="/delete" exact component={DeleteUser}/>
+                            <Route path="/edit" exact component={EditProfile}/>
+                        </Switch>
+                    </Col>
+                </Row>
+            </Container>
 
-    </Router>
-  );
+        </Router>
+    );
 }
 
 export default App;
