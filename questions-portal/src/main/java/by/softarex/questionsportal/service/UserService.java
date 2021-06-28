@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,31 +17,17 @@ public class UserService {
     private final EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.emailService = emailService;
     }
 
     public User getUser(Long userId) {
-        return userRepository.findById(userId).get();
-    }
-
-    public User validateUserPassword(String passwordAndUsername) {
-        JSONObject passwordAndUsernameJson = new JSONObject(passwordAndUsername);
-        String email = passwordAndUsernameJson.getString("email");
-        String password = passwordAndUsernameJson.getString("password");
-        User user = userRepository.getByEmail(email.toLowerCase());
-        if (user != null) {
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return user;
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
-
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.orElse(null);
     }
 
 
@@ -72,6 +59,22 @@ public class UserService {
         return user;
     }
 
+    public User validateUserPassword(String passwordAndUsername) {
+        JSONObject passwordAndUsernameJson = new JSONObject(passwordAndUsername);
+        String email = passwordAndUsernameJson.getString("email");
+        String password = passwordAndUsernameJson.getString("password");
+        User user = userRepository.getByEmail(email.toLowerCase());
+        if (user != null) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+    }
 
     public boolean deleteUser(Long userId, String password) {
         User deletedUser = userRepository.getById(userId);
