@@ -14,7 +14,7 @@ public class PossibleAnswerService {
         this.possibleAnswerRepository = possibleAnswerRepository;
     }
 
-    public void savePossibleAnswer(PossibleAnswer possibleAnswer){
+    public void savePossibleAnswer(PossibleAnswer possibleAnswer) {
         possibleAnswerRepository.save(possibleAnswer);
     }
 }

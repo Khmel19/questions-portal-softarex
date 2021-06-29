@@ -129,7 +129,7 @@ export default class AnswersList extends Component {
                                         <Button size="sm"
                                                 onClick={this.fillStorage.bind(this, answer.id)}
                                                 variant="outline-secondary"><FontAwesomeIcon
-                                                icon={faEdit}/></Button>
+                                            icon={faEdit}/></Button>
                                     </ButtonGroup></td>
                                 </tr>
                             ))

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Row, Col, Card, Form, InputGroup, FormControl, Button} from 'react-bootstrap';
+import {Button, Card, Col, Form, FormControl, InputGroup, Row} from 'react-bootstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPhone, faEnvelope, faLock, faUndo, faUserPlus, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelope, faLock, faPhone, faUser} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 export default class EditProfile extends Component {
@@ -22,14 +22,14 @@ export default class EditProfile extends Component {
 
     editUser = () => {
         const userId = localStorage.getItem("userId")
-            axios.put(`http://localhost:8080/${userId}/edit`, this.state)
-                .then(response => {
-                    localStorage.setItem("firstName", response.data.firstName)
-                    localStorage.setItem("lastName", response.data.lastName)
-                    window.location.reload();
-                }).catch((error) => {
-                alert("Wrong password")
-            });
+        axios.put(`http://localhost:8080/${userId}/edit`, this.state)
+            .then(response => {
+                localStorage.setItem("firstName", response.data.firstName)
+                localStorage.setItem("lastName", response.data.lastName)
+                window.location.reload();
+            }).catch((error) => {
+            alert("Wrong password")
+        });
     };
 
     findUserById = (userId) => {
@@ -68,7 +68,7 @@ export default class EditProfile extends Component {
                 <Col xs={5}>
                     <Card className={"border border-dark bg-white text-dark"}>
                         <Card.Header>
-                             Edit Profile
+                            Edit Profile
                         </Card.Header>
                         <Card.Body>
                             <Form.Row>
@@ -115,7 +115,8 @@ export default class EditProfile extends Component {
                                         <InputGroup.Prepend>
                                             <InputGroup.Text><FontAwesomeIcon icon={faPhone}/></InputGroup.Text>
                                         </InputGroup.Prepend>
-                                        <FormControl autoComplete="off" type="text" name="phoneNumber" value={phoneNumber}
+                                        <FormControl autoComplete="off" type="text" name="phoneNumber"
+                                                     value={phoneNumber}
                                                      onChange={this.userChange}
                                                      className={"bg-white text-dark"}
                                                      placeholder="Contact Number"/>

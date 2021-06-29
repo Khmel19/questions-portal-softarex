@@ -1,8 +1,9 @@
 package by.softarex.questionsportal.service;
 
+import by.softarex.questionsportal.dto.Credentials;
+import by.softarex.questionsportal.dto.UserDTO;
 import by.softarex.questionsportal.entity.User;
 import by.softarex.questionsportal.repository.UserRepository;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,10 +60,9 @@ public class UserService {
         return user;
     }
 
-    public User validateUserPassword(String passwordAndUsername) {
-        JSONObject passwordAndUsernameJson = new JSONObject(passwordAndUsername);
-        String email = passwordAndUsernameJson.getString("email");
-        String password = passwordAndUsernameJson.getString("password");
+    public User validateUserPassword(Credentials credentials) {
+        String email = credentials.getEmail();
+        String password = credentials.getPassword();
         User user = userRepository.getByEmail(email.toLowerCase());
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
@@ -76,10 +76,9 @@ public class UserService {
 
     }
 
-    public boolean deleteUser(Long userId, String password) {
+    public boolean deleteUser(Long userId, Credentials password) {
         User deletedUser = userRepository.getById(userId);
-        JSONObject passwordJson = new JSONObject(password);
-        if (passwordEncoder.matches(passwordJson.getString("password"), deletedUser.getPassword())) {
+        if (passwordEncoder.matches(password.getPassword(), deletedUser.getPassword())) {
             emailService.sendSimpleMessage(deletedUser.getEmail(), "deletion");
             userRepository.delete(deletedUser);
             return true;
@@ -89,16 +88,16 @@ public class UserService {
     }
 
 
-    public User updateUser(String updatedUser, Long userId) {
+    public User updateUser(UserDTO updatedUser, Long userId) {
         User existingUser = userRepository.getById(userId);
-        JSONObject updatedUserJson = new JSONObject(updatedUser);
-        if (passwordEncoder.matches(updatedUserJson.getString("currentPassword"), existingUser.getPassword())) {
-            existingUser.setFirstName(updatedUserJson.getString("firstName"));
-            existingUser.setLastName(updatedUserJson.getString("lastName"));
-            existingUser.setPhoneNumber(updatedUserJson.getString("phoneNumber"));
 
-            if (!updatedUserJson.getString("newPassword").equals("")) {
-                existingUser.setPassword(passwordEncoder.encode(updatedUserJson.getString("newPassword")));
+        if (passwordEncoder.matches(updatedUser.getCurrentPassword(), existingUser.getPassword())) {
+            existingUser.setFirstName(updatedUser.getFirstName());
+            existingUser.setLastName(updatedUser.getLastName());
+            existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+
+            if (!updatedUser.getNewPassword().equals("")) {
+                existingUser.setPassword(passwordEncoder.encode(updatedUser.getNewPassword()));
             }
             return userRepository.save(existingUser);
         } else {

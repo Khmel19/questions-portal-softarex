@@ -1,15 +1,12 @@
 package by.softarex.questionsportal.controller;
 
+import by.softarex.questionsportal.dto.ProcessedAnswer;
 import by.softarex.questionsportal.service.QuestionService;
-import by.softarex.questionsportal.util.ProcessedAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -35,13 +32,8 @@ public class AnswerController {
     }
 
 
-    @PutMapping("/{userId}/answers/{answerId}/edit")
-    public ResponseEntity<ProcessedAnswer> updateQuestionAnswer(
-            @RequestBody String answer,
-            @PathVariable Long userId,
-            @PathVariable Long answerId) {
+    @PutMapping("/answers/{answerId}")
+    public void updateQuestionAnswer(@RequestBody String answer, @PathVariable Long answerId) {
         questionService.updateQuestionAnswer(answerId, answer);
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -26,6 +26,7 @@ public class PossibleAnswer {
         this.possibleAnswer = possibleAnswer;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,6 +37,7 @@ public class PossibleAnswer {
         if (!Objects.equals(id, that.id)) return false;
         return Objects.equals(possibleAnswer, that.possibleAnswer);
     }
+
 
     @Override
     public int hashCode() {

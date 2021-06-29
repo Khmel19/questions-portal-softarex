@@ -34,6 +34,7 @@ public class User {
 
     private String password;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,6 +50,7 @@ public class User {
         if (!Objects.equals(phoneNumber, user.phoneNumber)) return false;
         return Objects.equals(password, user.password);
     }
+
 
     @Override
     public int hashCode() {

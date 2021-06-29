@@ -68,11 +68,10 @@ export default class Question extends Component {
         }
         const userId = localStorage.getItem("userId")
         const questionId = localStorage.getItem("questionId")
-        axios.put(`http://localhost:8080/${userId}/questions/${questionId}/edit`, question)
+        axios.put(`http://localhost:8080/${userId}/questions/${questionId}`, question)
             .then(response => {
                 if (response.data != null) {
                     this.setState(this.initialState);
-                    //this.questionList();
                 }
             });
         window.location.reload();
@@ -153,6 +152,8 @@ export default class Question extends Component {
                             <Col sm={8}>
                                 <Form.Control
                                     value={possibleAnswersList}
+                                    required={this.state.answerType === "combobox" || this.state.answerType === "checkbox" || this.state.answerType === "radio button"}
+                                    disabled={this.state.answerType === "single line text" || this.state.answerType === "date" || this.state.answerType === "multiline text"}
                                     name="possibleAnswersList"
                                     onChange={this.questionChange}
                                     as="textarea" rows={3}/>

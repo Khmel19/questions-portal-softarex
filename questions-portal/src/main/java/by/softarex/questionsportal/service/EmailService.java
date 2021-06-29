@@ -2,6 +2,7 @@ package by.softarex.questionsportal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,12 @@ public class EmailService {
 
     private final JavaMailSender emailSender;
 
+    @Value("${spring.mail.username}")
+    private String username;
 
     @Autowired
     public EmailService(@Qualifier("getMailSender") JavaMailSender emailSender) {
-
         this.emailSender = emailSender;
-
     }
 
 
@@ -25,7 +26,7 @@ public class EmailService {
 
         String text = generateMessage(whichMessage);
         String subject = generateSubject(whichMessage);
-        message.setFrom("dealer-statistics@yandex.by");
+        message.setFrom(username);
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
@@ -38,16 +39,16 @@ public class EmailService {
         if (whichMessage.equals("registration")) {
             return "Hello!" + " \n" +
                     "Welcome to Question Portal!";
-        } else if (whichMessage.equals("deletion")){
+        } else if (whichMessage.equals("deletion")) {
             return "You have deleted your account on the Question Portal. Waiting for you again!";
         }
         return "";
     }
 
-    private String generateSubject(String whichMessage){
+    private String generateSubject(String whichMessage) {
         if (whichMessage.equals("registration")) {
             return "You created an account";
-        }else if (whichMessage.equals("deletion")){
+        } else if (whichMessage.equals("deletion")) {
             return "You have deleted your account";
         }
         return "";

@@ -1,7 +1,7 @@
 package by.softarex.questionsportal.service;
 
+import by.softarex.questionsportal.dto.ProcessedAnswer;
 import by.softarex.questionsportal.entity.Question;
-import by.softarex.questionsportal.util.ProcessedAnswer;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,15 +12,12 @@ public class ProcessedAnswerService {
 
     public List<ProcessedAnswer> getProcessedAnswers(List<Question> questionsList) {
         List<ProcessedAnswer> processedQuestionList = new ArrayList<>();
-
-        for (Question question : questionsList) {
-            processedQuestionList.add(new ProcessedAnswer(question));
-        }
+        questionsList.forEach(question -> processedQuestionList.add(new ProcessedAnswer(question)));
         return processedQuestionList;
     }
 
 
-    public ProcessedAnswer getProcessedAnswer(Question question){
+    public ProcessedAnswer getProcessedAnswer(Question question) {
         return new ProcessedAnswer(question);
     }
 }

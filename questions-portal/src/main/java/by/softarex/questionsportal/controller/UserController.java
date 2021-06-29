@@ -1,5 +1,7 @@
 package by.softarex.questionsportal.controller;
 
+import by.softarex.questionsportal.dto.Credentials;
+import by.softarex.questionsportal.dto.UserDTO;
 import by.softarex.questionsportal.entity.User;
 import by.softarex.questionsportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody String passwordAndUsername, HttpServletRequest request) {
+    public ResponseEntity<User> login(@RequestBody Credentials credentials, HttpServletRequest request) {
 
-        User user = userService.validateUserPassword(passwordAndUsername);
+        User user = userService.validateUserPassword(credentials);
         if (user != null) {
             request.getSession().setAttribute("authenticated", true);
             return ResponseEntity.ok(user);
@@ -35,18 +37,17 @@ public class UserController {
 
 
     @GetMapping("/logout")
-    public ResponseEntity<User> logout(HttpServletRequest request) {
+    public void logout(HttpServletRequest request) {
         try {
             request.logout();
         } catch (ServletException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable Long userId){
+    public ResponseEntity<User> getUser(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
@@ -70,7 +71,7 @@ public class UserController {
 
 
     @PostMapping("/{userId}/delete")
-    public ResponseEntity<User> deleteUser(@PathVariable Long userId, @RequestBody String password, HttpServletRequest request) {
+    public ResponseEntity<User> deleteUser(@PathVariable Long userId, @RequestBody Credentials password, HttpServletRequest request) {
         if (userService.deleteUser(userId, password)) {
             try {
                 request.logout();
@@ -85,7 +86,7 @@ public class UserController {
 
 
     @PutMapping("/{userId}/edit")
-    public ResponseEntity<User> updateUser(@RequestBody String updatedUser, @PathVariable Long userId) {
+    public ResponseEntity<User> updateUser(@RequestBody UserDTO updatedUser, @PathVariable Long userId) {
         User user = userService.updateUser(updatedUser, userId);
         if (user != null) {
             return ResponseEntity.ok(user);

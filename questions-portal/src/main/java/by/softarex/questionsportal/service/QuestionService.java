@@ -1,10 +1,9 @@
 package by.softarex.questionsportal.service;
 
-import by.softarex.questionsportal.entity.PossibleAnswer;
+import by.softarex.questionsportal.dto.ProcessedAnswer;
+import by.softarex.questionsportal.dto.ProcessedQuestion;
 import by.softarex.questionsportal.entity.Question;
 import by.softarex.questionsportal.repository.QuestionRepository;
-import by.softarex.questionsportal.util.ProcessedAnswer;
-import by.softarex.questionsportal.util.ProcessedQuestion;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionService {
@@ -21,35 +21,40 @@ public class QuestionService {
     private final ProcessedQuestionService processedQuestionService;
     private final PossibleAnswerService possibleAnswerService;
     private final ProcessedAnswerService processedAnswerService;
+    private final QuestionConverterService questionConverterService;
 
     @Autowired
     public QuestionService(QuestionRepository questionRepository,
                            ProcessedQuestionService processedQuestionService,
                            UserService userService,
                            PossibleAnswerService possibleAnswerService,
-                           ProcessedAnswerService processedAnswerService) {
+                           ProcessedAnswerService processedAnswerService,
+                           QuestionConverterService questionConverterService) {
         this.questionRepository = questionRepository;
         this.processedQuestionService = processedQuestionService;
         this.userService = userService;
         this.possibleAnswerService = possibleAnswerService;
         this.processedAnswerService = processedAnswerService;
+        this.questionConverterService = questionConverterService;
+
     }
 
 
     public void saveQuestion(ProcessedQuestion processedQuestion, Long userId) {
-        questionRepository.save(processedQuestionService.getQuestionFromProcessedQuestion(processedQuestion, userId));
+        questionRepository.save(questionConverterService.getQuestionFromProcessedQuestion(processedQuestion, userId));
     }
 
 
     public void updateQuestion(ProcessedQuestion processedQuestion, Long userId, Long questionId) {
-        Question existingQuestion = questionRepository.findById(questionId).get();
-        Question updatingQuestion = processedQuestionService.getQuestionFromProcessedQuestion(processedQuestion, userId, questionId);
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        if (optionalQuestion.isPresent()) {
+            Question existingQuestion = optionalQuestion.get();
+            Question updatingQuestion = questionConverterService.getQuestionFromProcessedQuestion(processedQuestion, userId, questionId);
 
-        updatingQuestion.setUuid(existingQuestion.getUuid());
-        for (PossibleAnswer possibleAnswer : updatingQuestion.getPossibleAnswers()) {
-            possibleAnswerService.savePossibleAnswer(possibleAnswer);
+            updatingQuestion.setUuid(existingQuestion.getUuid());
+            updatingQuestion.getPossibleAnswers().forEach(possibleAnswerService::savePossibleAnswer);
+            questionRepository.save(updatingQuestion);
         }
-        questionRepository.save(updatingQuestion);
     }
 
 
@@ -72,22 +77,29 @@ public class QuestionService {
 
 
     public void updateQuestionAnswer(Long questionId, String answer) {
-        Question existingQuestion = questionRepository.findById(questionId).get();
-        JSONObject answerJson = new JSONObject(answer);
-        String answerStr = answerJson.getString("answer");
-        existingQuestion.setAnswer(answerStr);
-        questionRepository.save(existingQuestion);
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        if (optionalQuestion.isPresent()) {
+            Question existingQuestion = optionalQuestion.get();
+
+            JSONObject answerJson = new JSONObject(answer);
+            String answerStr = answerJson.getString("answer");
+            existingQuestion.setAnswer(answerStr);
+            questionRepository.save(existingQuestion);
+        }
     }
 
 
     public ProcessedQuestion getQuestion(Long questionId) {
-        return processedQuestionService.getProcessedQuestion(questionRepository.findById(questionId).get());
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        return optionalQuestion.map(processedQuestionService::getProcessedQuestion).orElse(null);
     }
 
 
-    public ProcessedAnswer getAnswer(Long answerId){
-        return processedAnswerService.getProcessedAnswer(questionRepository.findById(answerId).get());
+    public ProcessedAnswer getAnswer(Long answerId) {
+        Optional<Question> optionalQuestion = questionRepository.findById(answerId);
+        return optionalQuestion.map(processedAnswerService::getProcessedAnswer).orElse(null);
     }
+
 
     public Page<ProcessedAnswer> getAllUserAnswers(Long userId, Pageable pageable) {
         Page<Question> answersPage = questionRepository
@@ -111,6 +123,7 @@ public class QuestionService {
 
 
     public void deleteQuestion(Long questionId) {
-        questionRepository.delete(questionRepository.findById(questionId).get());
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        optionalQuestion.ifPresent(questionRepository::delete);
     }
 }

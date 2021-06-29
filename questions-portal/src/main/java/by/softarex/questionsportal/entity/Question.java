@@ -45,6 +45,7 @@ public class Question {
     @JoinColumn(name = "question_id")
     private List<PossibleAnswer> possibleAnswers = new ArrayList<>();
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,6 +63,7 @@ public class Question {
         if (!Objects.equals(user, question.user)) return false;
         return Objects.equals(possibleAnswers, question.possibleAnswers);
     }
+
 
     @Override
     public int hashCode() {

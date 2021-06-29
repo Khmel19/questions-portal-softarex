@@ -1,4 +1,4 @@
-package by.softarex.questionsportal.config.hashingconfig;
+package by.softarex.questionsportal.config.hashing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

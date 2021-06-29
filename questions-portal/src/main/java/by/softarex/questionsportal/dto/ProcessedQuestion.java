@@ -1,6 +1,5 @@
-package by.softarex.questionsportal.util;
+package by.softarex.questionsportal.dto;
 
-import by.softarex.questionsportal.entity.PossibleAnswer;
 import by.softarex.questionsportal.entity.Question;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,9 +29,7 @@ public class ProcessedQuestion implements Serializable {
         this.answer = question.getAnswer();
         this.possibleAnswersList = new ArrayList<>();
 
-        for (PossibleAnswer possibleAnswer : question.getPossibleAnswers()){
-            this.possibleAnswersList.add(possibleAnswer.getPossibleAnswer());
-        }
+        question.getPossibleAnswers().forEach(possibleAnswer -> this.possibleAnswersList.add(possibleAnswer.getPossibleAnswer()));
     }
 
 }

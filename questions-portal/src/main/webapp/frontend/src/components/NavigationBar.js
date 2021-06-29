@@ -1,16 +1,15 @@
 import React, {Component} from "react";
-import {Navbar, Nav, Container, NavDropdown} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Link, withRouter} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSignInAlt, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import {withRouter} from 'react-router-dom'
 
 class NavigationBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: localStorage.getItem("firstName"  ),
+            username: localStorage.getItem("firstName"),
             authenticated: localStorage.getItem("authenticated")
         }
         this.redirectCheck()
@@ -24,10 +23,9 @@ class NavigationBar extends Component {
                 localStorage.removeItem("userId")
                 localStorage.removeItem("authenticated");
 
-               // this.props.history.push("/");
                 window.location.reload();
             }).catch((error) => {
-            alert(error)
+            console.log(error)
         });
     };
 
@@ -43,7 +41,8 @@ class NavigationBar extends Component {
             <>
                 <div className="mr-auto"/>
                 <Nav className="navbar-right" style={{marginRight: 50}}>
-                    <Link to={"/registration"} style={{marginRight: 10}} className="nav-link"><FontAwesomeIcon icon={faUserPlus}/> Registration</Link>
+                    <Link to={"/registration"} style={{marginRight: 10}} className="nav-link"><FontAwesomeIcon
+                        icon={faUserPlus}/> Registration</Link>
                     <Link to={"/login"} className="nav-link"><FontAwesomeIcon icon={faSignInAlt}/> Login</Link>
                 </Nav>
             </>
@@ -57,7 +56,7 @@ class NavigationBar extends Component {
                     <NavDropdown title={this.state.username} id="navbarScrollingDropdown">
                         <NavDropdown.Item href={'/edit'}>Edit Profile</NavDropdown.Item>
                         <NavDropdown.Item href={'/delete'}>Delete Profile</NavDropdown.Item>
-                        <NavDropdown.Item onClick={this.logout }>Logout</NavDropdown.Item>
+                        <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </>
@@ -76,4 +75,5 @@ class NavigationBar extends Component {
         );
     }
 }
+
 export default withRouter(NavigationBar);

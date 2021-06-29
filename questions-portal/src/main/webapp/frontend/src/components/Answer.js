@@ -54,9 +54,8 @@ export default class Answer extends Component {
         const answer = {
             ...this.state,
         }
-        const userId = localStorage.getItem("userId")
         const answerId = localStorage.getItem("answerId")
-        axios.put(`http://localhost:8080/${userId}/answers/${answerId}/edit`, answer)
+        axios.put(`http://localhost:8080/answers/${answerId}`, answer)
             .then(response => {
                 if (response.data != null) {
                     this.setState(this.initialState);

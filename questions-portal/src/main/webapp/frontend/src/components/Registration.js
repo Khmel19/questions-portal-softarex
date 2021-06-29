@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Row, Col, Card, Form, InputGroup, FormControl, Button} from 'react-bootstrap';
+import {Button, Card, Col, Form, FormControl, InputGroup, Row} from 'react-bootstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPhone, faEnvelope, faLock, faUndo, faUserPlus, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelope, faLock, faPhone, faUndo, faUser, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 export default class Registration extends Component {
@@ -132,7 +132,8 @@ export default class Registration extends Component {
                                         <InputGroup.Prepend>
                                             <InputGroup.Text><FontAwesomeIcon icon={faPhone}/></InputGroup.Text>
                                         </InputGroup.Prepend>
-                                        <FormControl autoComplete="off" type="text" name="phoneNumber" value={phoneNumber}
+                                        <FormControl autoComplete="off" type="text" name="phoneNumber"
+                                                     value={phoneNumber}
                                                      onChange={this.userChange}
                                                      className={"bg-white text-dark"}
                                                      placeholder="Enter Contact Number"/>

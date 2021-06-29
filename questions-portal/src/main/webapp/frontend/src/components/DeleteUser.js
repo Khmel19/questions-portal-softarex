@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Card, Col, Form, FormControl, InputGroup, Row} from 'react-bootstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLock, faTrash} from "@fortawesome/free-solid-svg-icons";
-// const axios = window.axios
+
 import axios from "axios";
 
 class DeleteUser extends Component {
@@ -36,7 +36,7 @@ class DeleteUser extends Component {
                 localStorage.removeItem("authenticated");
                 window.location.reload();
             }).catch((error) => {
-            alert(error)
+            console.log(error)
         });
     };
 
@@ -49,7 +49,7 @@ class DeleteUser extends Component {
                 <Col xs={5}>
                     <Card className={"border border-dark bg-white text-dark"}>
                         <Card.Header>
-                             Delete Profile
+                            Delete Profile
                         </Card.Header>
                         <Card.Body>
                             <Form.Row>
@@ -71,8 +71,8 @@ class DeleteUser extends Component {
                                     required
                                     variant="primary"
                                     onClick={() => {
-                                this.deleteUser()
-                            }}
+                                        this.deleteUser()
+                                    }}
                                     disabled={password === ''}>
                                 <FontAwesomeIcon icon={faTrash}/> Delete Account
                             </Button>

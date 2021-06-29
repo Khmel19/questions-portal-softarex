@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Row, Col, Card, Form, InputGroup, FormControl, Button, Alert} from 'react-bootstrap';
+import {Button, Card, Col, Form, FormControl, InputGroup, Row} from 'react-bootstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSignInAlt, faEnvelope, faLock, faUndo} from "@fortawesome/free-solid-svg-icons";
-// const axios = window.axios
+import {faEnvelope, faLock, faSignInAlt, faUndo} from "@fortawesome/free-solid-svg-icons";
+
 import axios from "axios";
 
 class Login extends Component {
