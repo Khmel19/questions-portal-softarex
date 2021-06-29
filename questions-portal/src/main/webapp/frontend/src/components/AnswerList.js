@@ -32,7 +32,7 @@ export default class AnswersList extends Component {
     getAnswers(currentPage) {
         currentPage -= 1
         const userId = localStorage.getItem("userId")
-        axios.get(`http://localhost:8080/${userId}/answers?page=${currentPage}&size=${this.state.answersPerPage}`)
+        axios.get(`http://localhost:8080/api/${userId}/answers?page=${currentPage}&size=${this.state.answersPerPage}`)
             .then(response => response.data)
             .then((data) => {
                 this.setState({

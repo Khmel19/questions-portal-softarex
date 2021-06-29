@@ -29,7 +29,7 @@ export default class Question extends Component {
 
 
     findQuestionById = (questionId) => {
-        axios.get(`http://localhost:8080/questions/${questionId}`)
+        axios.get(`http://localhost:8080/api/questions/${questionId}`)
             .then(response => {
                 this.setState({
                     forUserEmail: response.data.forUserEmail,
@@ -48,7 +48,7 @@ export default class Question extends Component {
             possibleAnswersList: eol.split(this.state.possibleAnswersList)
         }
         const userId = localStorage.getItem("userId")
-        axios.post(`http://localhost:8080/${userId}/questions/add`, question)
+        axios.post(`http://localhost:8080/api/${userId}/questions/add`, question)
             .then(response => {
                 if (response.data != null) {
                     this.setState(this.initialState);
@@ -68,7 +68,7 @@ export default class Question extends Component {
         }
         const userId = localStorage.getItem("userId")
         const questionId = localStorage.getItem("questionId")
-        axios.put(`http://localhost:8080/${userId}/questions/${questionId}`, question)
+        axios.put(`http://localhost:8080/api/${userId}/questions/${questionId}`, question)
             .then(response => {
                 if (response.data != null) {
                     this.setState(this.initialState);

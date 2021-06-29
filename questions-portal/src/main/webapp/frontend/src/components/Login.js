@@ -28,7 +28,7 @@ class Login extends Component {
     };
 
     validateUser = () => {
-        axios.post(`http://localhost:8080/login`, this.state)
+        axios.post(`http://localhost:8080/api/login`, this.state)
             .then(response => {
                 localStorage.setItem("firstName", response.data.firstName)
                 localStorage.setItem("lastName", response.data.lastName)

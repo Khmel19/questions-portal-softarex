@@ -32,7 +32,7 @@ export default class Answer extends Component {
 
 
     findAnswerById = (answerId) => {
-        axios.get(`http://localhost:8080/answers/${answerId}`)
+        axios.get(`http://localhost:8080/api/answers/${answerId}`)
             .then(response => {
                 this.setState({
                     fromUserEmail: response.data.fromUserEmail,
@@ -55,7 +55,7 @@ export default class Answer extends Component {
             ...this.state,
         }
         const answerId = localStorage.getItem("answerId")
-        axios.put(`http://localhost:8080/answers/${answerId}`, answer)
+        axios.put(`http://localhost:8080/api/answers/${answerId}`, answer)
             .then(response => {
                 if (response.data != null) {
                     this.setState(this.initialState);

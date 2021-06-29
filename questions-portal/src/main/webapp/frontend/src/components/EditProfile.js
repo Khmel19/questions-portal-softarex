@@ -22,7 +22,7 @@ export default class EditProfile extends Component {
 
     editUser = () => {
         const userId = localStorage.getItem("userId")
-        axios.put(`http://localhost:8080/${userId}/edit`, this.state)
+        axios.put(`http://localhost:8080/api/${userId}/edit`, this.state)
             .then(response => {
                 localStorage.setItem("firstName", response.data.firstName)
                 localStorage.setItem("lastName", response.data.lastName)
@@ -33,7 +33,7 @@ export default class EditProfile extends Component {
     };
 
     findUserById = (userId) => {
-        axios.get(`http://localhost:8080/users/${userId}`)
+        axios.get(`http://localhost:8080/api/users/${userId}`)
             .then(response => {
                 this.setState({
                     firstName: response.data.firstName,

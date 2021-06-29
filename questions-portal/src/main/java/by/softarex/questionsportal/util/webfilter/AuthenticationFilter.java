@@ -33,9 +33,9 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        String loginURI = request.getContextPath() + "/login";
-        String logoutURI = request.getContextPath() + "/logout";
-        String registrationURI = request.getContextPath() + "/registration";
+        String loginURI = request.getContextPath() + "/api/login";
+        String logoutURI = request.getContextPath() + "/api/logout";
+        String registrationURI = request.getContextPath() + "/api/registration";
 
         boolean loggedIn = session != null && session.getAttribute("authenticated") != null;
         boolean loginRequest = request.getRequestURI().equals(loginURI);

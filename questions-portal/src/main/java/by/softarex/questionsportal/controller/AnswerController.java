@@ -20,19 +20,19 @@ public class AnswerController {
     }
 
 
-    @GetMapping("/{userId}/answers")
+    @GetMapping("/api/{userId}/answers")
     public ResponseEntity<Page<ProcessedAnswer>> getAllUserAnswers(@PathVariable Long userId, Pageable pageable) {
         return ResponseEntity.ok(questionService.getAllUserAnswers(userId, pageable));
     }
 
 
-    @GetMapping("/answers/{answerId}")
+    @GetMapping("/api/answers/{answerId}")
     public ResponseEntity<ProcessedAnswer> getAnswer(@PathVariable Long answerId) {
         return ResponseEntity.ok(questionService.getAnswer(answerId));
     }
 
 
-    @PutMapping("/answers/{answerId}")
+    @PutMapping("/api/answers/{answerId}")
     public void updateQuestionAnswer(@RequestBody String answer, @PathVariable Long answerId) {
         questionService.updateQuestionAnswer(answerId, answer);
     }

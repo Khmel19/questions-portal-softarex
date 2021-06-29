@@ -22,25 +22,25 @@ public class QuestionController {
     }
 
 
-    @GetMapping("/{userId}/questions")
+    @GetMapping("/api/{userId}/questions")
     public ResponseEntity<Page<ProcessedQuestion>> getAllUserQuestions(@PathVariable Long userId, Pageable pageable, HttpServletResponse response) {
 
         return ResponseEntity.ok(questionService.getAllUserQuestions(userId, pageable));
     }
 
 
-    @GetMapping("/questions/{questionId}")
+    @GetMapping("/api/questions/{questionId}")
     public ResponseEntity<ProcessedQuestion> getQuestion(@PathVariable Long questionId) {
         return ResponseEntity.ok(questionService.getQuestion(questionId));
     }
 
-    @PostMapping("/{userId}/questions/add")
+    @PostMapping("/api/{userId}/questions/add")
     public void addQuestion(@RequestBody ProcessedQuestion processedQuestion, @PathVariable Long userId) {
         questionService.saveQuestion(processedQuestion, userId);
     }
 
 
-    @PutMapping("/{userId}/questions/{questionId}")
+    @PutMapping("/api/{userId}/questions/{questionId}")
     public void updateQuestion(
             @RequestBody ProcessedQuestion processedQuestion,
             @PathVariable Long userId,
@@ -50,7 +50,7 @@ public class QuestionController {
     }
 
 
-    @DeleteMapping("/{userId}/questions/{questionId}/delete")
+    @DeleteMapping("/api/{userId}/questions/{questionId}/delete")
     public void deleteQuestion(@PathVariable Long questionId) {
         questionService.deleteQuestion(questionId);
     }

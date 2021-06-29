@@ -27,7 +27,7 @@ export default class QuestionList extends Component {
         currentPage -= 1
         const userId = localStorage.getItem("userId")
 
-        axios.get(`http://localhost:8080/${userId}/questions?page=${currentPage}&size=${this.state.questionsPerPage}`)
+        axios.get(`http://localhost:8080/api/${userId}/questions?page=${currentPage}&size=${this.state.questionsPerPage}`)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
@@ -63,7 +63,7 @@ export default class QuestionList extends Component {
 
     deleteQuestion = (questionId) => {
         const userId = localStorage.getItem("userId")
-        axios.delete(`http://localhost:8080/${userId}/questions/${questionId}/delete`)
+        axios.delete(`http://localhost:8080/api/${userId}/questions/${questionId}/delete`)
             .then(response => {
                 if (response.data != null) {
                     this.setState({

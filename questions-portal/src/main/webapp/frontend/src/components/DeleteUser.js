@@ -28,7 +28,7 @@ class DeleteUser extends Component {
 
     deleteUser = () => {
         const userId = localStorage.getItem("userId")
-        axios.post(`http://localhost:8080/${userId}/delete`, this.state)
+        axios.post(`http://localhost:8080/api/${userId}/delete`, this.state)
             .then(response => {
                 localStorage.removeItem("firstName")
                 localStorage.removeItem("lastName")

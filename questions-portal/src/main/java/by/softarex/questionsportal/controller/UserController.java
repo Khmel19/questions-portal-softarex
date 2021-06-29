@@ -23,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<User> login(@RequestBody Credentials credentials, HttpServletRequest request) {
 
         User user = userService.validateUserPassword(credentials);
@@ -36,7 +36,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/logout")
+    @GetMapping("/api/logout")
     public void logout(HttpServletRequest request) {
         try {
             request.logout();
@@ -46,19 +46,19 @@ public class UserController {
     }
 
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/api/users/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
 
-    @GetMapping("/emails")
+    @GetMapping("/api/emails")
     public ResponseEntity<List<String>> getEmails() {
         return ResponseEntity.ok(userService.getAllUsersEmails());
     }
 
 
-    @PostMapping("/registration")
+    @PostMapping("/api/registration")
     public ResponseEntity<User> registration(@RequestBody User newUser, HttpServletRequest request) {
         User user = userService.registerUser(newUser);
         if (user != null) {
@@ -70,7 +70,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/{userId}/delete")
+    @PostMapping("/api/{userId}/delete")
     public ResponseEntity<User> deleteUser(@PathVariable Long userId, @RequestBody Credentials password, HttpServletRequest request) {
         if (userService.deleteUser(userId, password)) {
             try {
@@ -85,7 +85,7 @@ public class UserController {
     }
 
 
-    @PutMapping("/{userId}/edit")
+    @PutMapping("/api/{userId}/edit")
     public ResponseEntity<User> updateUser(@RequestBody UserDTO updatedUser, @PathVariable Long userId) {
         User user = userService.updateUser(updatedUser, userId);
         if (user != null) {

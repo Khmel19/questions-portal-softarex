@@ -16,7 +16,7 @@ class NavigationBar extends Component {
     }
 
     logout = () => {
-        axios.get(`http://localhost:8080/logout`)
+        axios.get(`http://localhost:8080/api/logout`)
             .then(response => {
                 localStorage.removeItem("firstName")
                 localStorage.removeItem("lastName")

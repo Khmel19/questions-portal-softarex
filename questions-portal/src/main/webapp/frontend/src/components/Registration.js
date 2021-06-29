@@ -22,7 +22,7 @@ export default class Registration extends Component {
 
     registerUser = () => {
         if (this.state.confirmPassword === this.state.password) {
-            axios.post(`http://localhost:8080/registration`, this.state)
+            axios.post(`http://localhost:8080/api/registration`, this.state)
                 .then(response => {
                     localStorage.setItem("firstName", response.data.firstName)
                     localStorage.setItem("lastName", response.data.lastName)
